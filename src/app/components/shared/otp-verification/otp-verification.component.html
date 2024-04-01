@@ -1,0 +1,39 @@
+<div id="otp-verification" class="flex flex-col items-center justify-center" style="background-image: url('https://rayoflightthemes.com/wordpress-themes/talking-minds-wordpress-theme/wp-content/uploads/2021/12/Bg_Home_Hero.png'); background-size: cover; background-position: center;">
+    <div class="mt-10">
+        <h1 class="text-4xl font-bold text-[#0694A2]">OTP Verification</h1>
+    </div>
+    <div class=" mx-auto border max-w-sm mt-6 rounded"><!-- max-w-md -->
+        <form class="shadow-md px-6 py-7">
+            <div class="flex justify-center gap-2 mb-6">
+                <input name="otp1" [(ngModel)]="otp1" class="w-12 h-12 text-center border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="one-time-code" required>
+                <input name="otp2" [(ngModel)]="otp2" class="w-12 h-12 text-center border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="one-time-code" required>
+                <input name="otp3" [(ngModel)]="otp3" class="w-12 h-12 text-center border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="one-time-code" required>
+                <input name="otp4" [(ngModel)]="otp4" class="w-12 h-12 text-center border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="one-time-code" required>
+                <input name="otp5" [(ngModel)]="otp5" class="w-12 h-12 text-center border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="one-time-code" required>
+                <input name="otp6" [(ngModel)]="otp6" class="w-12 h-12 text-center border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="one-time-code" required>
+            </div>
+            <div class="flex items-center justify-center">
+                <button (click)="verifyOTP()" class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                    Verify
+                </button>
+                <div (click)="resendOTP()" class="inline-block align-baseline font-bold text-sm text-teal-500 hover:text-teal-800 ml-4 cursor-pointer" href="#">
+                    Resend OTP
+                </div>
+
+                
+            </div>
+        </form>
+        
+    </div>
+    <p *ngIf="successMessage" class="text-center text-green-500 mt-2">    
+            {{successMessage}}     
+            
+    </p>
+    <p class="text-teal-600">
+        Click here to <a class="underline" href="/user/login">Login
+    </a>
+    </p>
+    <p class="text-center text-red-800 mt-2">
+        {{errorMessage}}
+    </p>
+</div>
