@@ -13,7 +13,8 @@ export const adminLoggedOutGuard: CanActivateFn = (route, state) => {
   }
   else
   {
-    router.navigate(['admin/home']);//,{relativeTo: activatedRoute}
+    if(typeof localStorage !== 'undefined')
+      router.navigate(['admin/home']);//,{relativeTo: activatedRoute}
     return false;
   }
   //return true;

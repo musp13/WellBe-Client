@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { UserOtpVerifyService } from '../../../services/userOtpVerify/user-otp-verify.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { TherapistOtpVerifyService } from '../../../services/therapistOtpVerify/therapist-otp-verify.service';
 
 @Component({
   selector: 'app-otp-verification',
@@ -27,6 +28,7 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
   otpFormObj = new FormData();
   
   userOtpVerifyService = inject(UserOtpVerifyService);
+  therapistOtpVerifyService = inject(TherapistOtpVerifyService);
   activatedRoute = inject(ActivatedRoute);
 
   otpVerificationSubscription! : Subscription;
@@ -66,11 +68,26 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
         }
       })
     }
+    else if(this.userType=='therapist')
+    {
+      console.log(`check otpdata=${this.otpFormObj} and userId = ${this.userId}  and otp = ${this.otp}`);
+      
+      this.otpVerificationSubscription = this.therapistOtpVerifyService.verifyOTP(this.userId , this.otp).subscribe({
+        next: (res)=>{
+          this.successMessage = res.message;
+          this.errorMessage = '';
+        },
+        error: (err)=>{
+          this.errorMessage = err.error.message;
+          this.successMessage='';
+        }
+      })
+    }
   }
 
   resendOTP()
   {
-    if(this.userId)
+    if(this.userType === 'user')
     {
       this.resendOtpSubscription = this.userOtpVerifyService.resendOTP(this.userId).subscribe({
         next: (res)=>{
@@ -83,6 +100,20 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
         }
       });
     }
+    else if(this.userType === 'therapist')
+    {
+      this.resendOtpSubscription = this.therapistOtpVerifyService.resendOTP(this.userId).subscribe({
+        next: (res)=>{
+          this.successMessage = res.message;
+          this.errorMessage = '';
+        },
+        error: (err)=>{
+          this.errorMessage = err.error.message;
+          this.successMessage='';
+        }
+      });
+    }
+
   }
 
   ngOnDestroy(): void {

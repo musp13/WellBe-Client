@@ -7,6 +7,7 @@ import { TherapistLoginService } from "../../services/therapistLogin/therapist-l
 import { TherapistLogoutService } from "../../services/therapistLogout/therapist-logout.service";
 import { CheckTherapistService } from "../../services/checkTherapist/check-therapist.service";
 import { therapistLoginFailure, therapistLoginSuccess, therapistLogoutFailure, therapistLogoutSuccess } from "./therapistAuth.actions";
+import { EncryptionService } from "../../services/encryption/encryption.service";
 
 @Injectable()
 export class TherapistLoginEffects {
@@ -14,7 +15,8 @@ export class TherapistLoginEffects {
                  private therapistLoginService: TherapistLoginService,
                  private therapistLogoutService: TherapistLogoutService,
                  private checkTherapistService: CheckTherapistService,
-                 private router: Router  
+                 private router: Router,
+                 private encryptionService: EncryptionService  
                ){};
 
     therapistLogin$ = createEffect( ()=>
@@ -25,7 +27,8 @@ export class TherapistLoginEffects {
                                     map(result=>{
                                         console.log(' result therapist: ', result.data);
                                         this.checkTherapistService.isLoggedIn$.next(true);
-                                        localStorage.setItem("therapistId", result.data.therapistId);
+                                        const encryptedTherapistId = this.encryptionService.encrypt(result.data.therapistId);
+                                        localStorage.setItem("therapistId", encryptedTherapistId);
                                         localStorage.setItem("therapist_access_token", result.therapist_token);
                                         return therapistLoginSuccess({therapist: result.data})
                                     }),
@@ -56,6 +59,8 @@ export class TherapistLoginEffects {
                                 dispatch: false
                             }
     );
+
+
     
     therapistLogout$ = createEffect( ()=>
         this.actions$.pipe(

@@ -29,8 +29,12 @@
             {{successMessage}}     
             
     </p>
-    <p class="text-teal-600">
+    <p *ngIf="userType==='user'" class="text-teal-600">
         Click here to <a class="underline" href="/user/login">Login
+    </a>
+    </p>
+    <p *ngIf="userType==='therapist'" class="text-teal-600">
+        Click here to <a class="underline" href="/therapist/login">Login
     </a>
     </p>
     <p class="text-center text-red-800 mt-2">

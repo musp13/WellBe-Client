@@ -41,6 +41,13 @@ import { loggingInterceptor } from './interceptors/logging/logging.interceptor';
 import { credentialsInterceptor } from './interceptors/credentials/credentials.interceptor';
 import { paramsInterceptor } from './interceptors/params/params.interceptor';
 import { OtpVerificationComponent } from './components/shared/otp-verification/otp-verification.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomePageComponent } from './components/shared/home-page/home-page.component';
+import { ConfirmBoxConfigModule, DialogConfigModule, NgxAwesomePopupModule, ToastNotificationConfigModule } from '@costlydeveloper/ngx-awesome-popup';
+import { UserTableComponent } from './components/shared/user-table/user-table.component';
+import { TherapistListComponent } from './components/admin/therapist-list/therapist-list.component';
+import { UserListComponent } from './components/admin/user-list/user-list.component';
 
 const appRoutes: Routes = [
   {path:'admin',component: AdminLayoutComponent,
@@ -48,6 +55,8 @@ const appRoutes: Routes = [
       {path: 'login', component: AdminLoginComponent, canActivate: [adminLoggedOutGuard]},
       {path: 'home', component: AdminHomeComponent, canActivate: [adminLoggedInGuard]},
       {path: 'add_therapist', component: AdminAddTherapistComponent, canActivate: [adminLoggedInGuard]},
+      {path: 'user_list', component: UserListComponent, canActivate: [adminLoggedInGuard]},
+      {path: 'therapist_list', component: TherapistListComponent, canActivate: [adminLoggedInGuard]},
       {path: '', redirectTo: '/admin/login', pathMatch: 'full'},
     ]
   },
@@ -55,6 +64,7 @@ const appRoutes: Routes = [
     children: [
       {path: 'login', component: TherapistLoginComponent, canActivate: [therapistLoggedOutGuard]},
       {path: 'home', component: TherapistHomeComponent, canActivate: [therapistLoggedInGuard]},
+      {path: 'otp_verification', component: OtpVerificationComponent, canActivate: [therapistLoggedOutGuard]},
       {path: '', redirectTo: '/therapist/login', pathMatch: 'full'},
     ]
   },
@@ -62,12 +72,14 @@ const appRoutes: Routes = [
     children: [
       {path: 'login', component: UserLoginComponent, canActivate: [userLoggedOutGuard]},
       {path: 'signup', component: UserSignupComponent, canActivate: [userLoggedOutGuard]},
-      {path: 'home', component: UserHomeComponent, canActivate: [userLoggedInGuard]},
+      {path: 'home', component: UserHomeComponent}, /* , canActivate: [userLoggedInGuard] */
       {path: 'otp_verification', component: OtpVerificationComponent, canActivate: [userLoggedOutGuard]},
       {path: '', redirectTo: '/user/login', pathMatch: 'full'},
     ]
   },
-  {path: '', redirectTo: '/user/login', pathMatch: 'full'}
+  //{path: '', redirectTo: '/user/login', pathMatch: 'full'}
+  {path: '', redirectTo: '/user/home', pathMatch: 'full' },
+  {path: '*', redirectTo: '/user/home', pathMatch: 'full'}
 ]
 
 @NgModule({
@@ -90,6 +102,10 @@ const appRoutes: Routes = [
     UserSignupComponent,
     AdminAddTherapistComponent,
     OtpVerificationComponent,
+    HomePageComponent,
+    UserTableComponent,
+    TherapistListComponent,
+    UserListComponent,
   ],
   imports: [
     BrowserModule,
@@ -98,7 +114,13 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    StoreModule.forRoot({},{})
+    StoreModule.forRoot({},{}),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    NgxAwesomePopupModule.forRoot(),// Essential, mandatory main module.
+    DialogConfigModule.forRoot(), // Needed for instantiating dynamic components.
+    ConfirmBoxConfigModule.forRoot(), // Needed for instantiating confirm boxes.
+    ToastNotificationConfigModule.forRoot() // Needed for instantiating toast notifications.
   ],
   providers: [
     provideClientHydration(),

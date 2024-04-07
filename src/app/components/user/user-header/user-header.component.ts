@@ -17,11 +17,19 @@ export class UserHeaderComponent implements OnInit, OnDestroy {
 
   checkUserService = inject(CheckUserService);
 
-  isLoggedIn:boolean = this.checkUserService.isLoggedIn();
+  isLoggedIn:boolean = false; //this.checkUserService.isLoggedIn();
+  isLocalStorageLoaded = false; // Initially set to false
 
   loginCheckSubscription!: Subscription;
 
   ngOnInit(): void {
+    // Check if user is logged in when the component initializes
+    this.isLoggedIn = this.checkUserService.isLoggedIn();
+
+    // Additional check for localStorage data
+    if (typeof localStorage!=='undefined') {
+      this.isLocalStorageLoaded = true;
+    }
 
     this.loginCheckSubscription = this.checkUserService.isLoggedIn$.subscribe(res=>{
       this.isLoggedIn = this.checkUserService.isLoggedIn();

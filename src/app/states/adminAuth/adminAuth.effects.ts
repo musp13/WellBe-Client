@@ -7,6 +7,7 @@ import { adminLoginFailure, adminLoginSuccess, adminLogoutFailure, adminLogoutSu
 import { error } from "console";
 import { AdminLogoutService } from "../../services/adminLogout/admin-logout.service";
 import { CheckAdminService } from "../../services/checkAdmin/check-admin.service";
+import { EncryptionService } from "../../services/encryption/encryption.service";
 
 @Injectable()
 export class AdminLoginEffects {
@@ -14,7 +15,8 @@ export class AdminLoginEffects {
                  private adminLoginService: AdminLoginService,
                  private adminLogoutService: AdminLogoutService,
                  private checkAdminService: CheckAdminService,
-                 private router: Router  
+                 private router: Router,
+                 private encryptionService: EncryptionService  
                ){};
 
     adminLogin$ = createEffect( ()=>
@@ -26,7 +28,8 @@ export class AdminLoginEffects {
                                     map(result=>{
                                         console.log(' result admin: ', result.data);
                                         this.checkAdminService.isLoggedIn$.next(true);
-                                        localStorage.setItem("adminId", result.data.adminId);
+                                        const encryptedAdminId = this.encryptionService.encrypt(result.data.adminId);
+                                        localStorage.setItem("adminId", encryptedAdminId);
                                         localStorage.setItem("admin_access_token", result.admin_token);
                                         return adminLoginSuccess({admin: result.data})
                                     }),

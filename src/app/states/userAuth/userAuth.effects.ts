@@ -6,6 +6,7 @@ import { UserLoginService } from "../../services/userLogin/user-login.service";
 import { UserLogoutService } from "../../services/userLogout/user-logout.service";
 import { CheckUserService } from "../../services/checkUser/check-user.service";
 import { userLoginFailure, userLoginSuccess, userLogoutFailure, userLogoutSuccess } from "./userAuth.actions";
+import { EncryptionService } from "../../services/encryption/encryption.service";
 
 @Injectable()
 export class UserLoginEffects {
@@ -13,7 +14,8 @@ export class UserLoginEffects {
                  private userLoginService: UserLoginService,
                  private userLogoutService: UserLogoutService,
                  private checkUserService: CheckUserService,
-                 private router: Router  
+                 private router: Router,
+                 private encryptionService: EncryptionService  
                ){};
 
     userLogin$ = createEffect( ()=>
@@ -24,7 +26,8 @@ export class UserLoginEffects {
                                     map(result=>{
                                         console.log(' result user: ', result.data);
                                         this.checkUserService.isLoggedIn$.next(true);
-                                        localStorage.setItem("userId", result.data.userId);
+                                        const encryptedUserId = this.encryptionService.encrypt(result.data.userId);
+                                        localStorage.setItem("userId", encryptedUserId);
                                         localStorage.setItem("user_access_token", result.user_token);
                                         return userLoginSuccess({user: result.data})
                                     }),

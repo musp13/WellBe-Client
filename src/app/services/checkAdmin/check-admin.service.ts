@@ -19,7 +19,7 @@ export class CheckAdminService {
 
   isLoggedInLocalStorage()
   {
-    return typeof localStorage!=='undefined' && !!localStorage.getItem("adminId");
+    return typeof localStorage!=='undefined' && !!localStorage.getItem("admin_access_token");
   }
 
   isAdminLoggedIn()
@@ -30,7 +30,7 @@ export class CheckAdminService {
       map(admin=> !!admin)
     ); */
     if (isPlatformBrowser(this.platformId)) {
-      const adminId = localStorage.getItem('adminId');
+      const adminId = localStorage.getItem('admin_access_token');
       return !!adminId;
     }
     return false;

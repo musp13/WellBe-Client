@@ -11,7 +11,7 @@ export class CheckTherapistService {
 
   isLoggedIn()
   {
-    return typeof localStorage!=='undefined' && !!localStorage.getItem("therapistId");
+    return typeof localStorage!=='undefined' && !!localStorage.getItem("therapist_access_token");
   }
   
 }

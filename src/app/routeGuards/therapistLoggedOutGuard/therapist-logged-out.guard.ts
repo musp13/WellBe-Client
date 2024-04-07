@@ -12,7 +12,8 @@ export const therapistLoggedOutGuard: CanActivateFn = (route, state) => {
   }
   else
   {
-    router.navigate(['therapist/home']);//,{relativeTo: activatedRoute}
+    if(typeof localStorage !== 'undefined')
+      router.navigate(['therapist/home']);//,{relativeTo: activatedRoute}
     return false;
   }
   return true;

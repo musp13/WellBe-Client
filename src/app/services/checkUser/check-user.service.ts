@@ -11,7 +11,7 @@ export class CheckUserService {
 
   isLoggedIn()
   {
-    return typeof localStorage!=='undefined' && !!localStorage.getItem("userId");
+    return typeof localStorage!=='undefined' && !!localStorage.getItem("user_access_token");
   }
   
 }

@@ -7,14 +7,15 @@ export const adminLoggedInGuard: CanActivateFn = (route, state) => {
   const checkAdminService = inject(CheckAdminService);
   const router = inject(Router);
   const activatedRoute = inject(ActivatedRoute);
-
+  
   if(checkAdminService.isAdminLoggedIn())
   {
     return true;
   }
   else
   {
-    router.navigate(['admin/login'],);
+    if(typeof localStorage !== 'undefined')
+      router.navigate(['admin/login'],{ replaceUrl: true });
     return false;
   }
   //return true;

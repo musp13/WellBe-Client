@@ -12,6 +12,7 @@ export class AddTherapistService {
 
   addTherapist(addTherapistObj: any)
   {
-    return this.http.post<any>(`${apiUrls.therapistsApi}register_therapist`, addTherapistObj, {withCredentials:true});
+    //return this.http.post<any>(`${apiUrls.therapistsApi}register_therapist`, addTherapistObj, {withCredentials:true});
+    return this.http.post<any>(`${apiUrls.adminApi}add_therapist`, addTherapistObj);
   }
 }

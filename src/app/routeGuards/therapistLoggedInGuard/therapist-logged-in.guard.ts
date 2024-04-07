@@ -13,7 +13,8 @@ export const therapistLoggedInGuard: CanActivateFn = (route, state) => {
   }
   else
   {
-    router.navigate(['therapist/login'],);
+    if(typeof localStorage !== 'undefined')
+      router.navigate(['therapist/login'],);
     return false;
   }
   //return true;

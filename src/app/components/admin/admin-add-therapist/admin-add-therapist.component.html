@@ -26,7 +26,8 @@
                             />
                             <!-- <span *ngIf="addTherapistForm.hasError('required', 'fullName') && addTherapistForm.controls['fullName'].dirty" class="text-xs italic text-red-500">Full Name is required.</span> -->
                             <span *ngIf="addTherapistForm.hasError('whitespace', 'fullName') && addTherapistForm.controls['fullName'].dirty" class="text-xs italic text-red-500">Full Name cannot be empty or spaces only.</span>
-						</div>
+                            <span *ngIf="addTherapistForm.hasError('minlength', 'fullName') && addTherapistForm.controls['fullName'].dirty" class="text-xs italic text-red-500">Full Name should be atleast 3 characters long.</span>
+                        </div>
 						<div class="mb-4">
 							<label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white" for="email">
                                 Email
@@ -68,7 +69,7 @@
 								<!-- <p class="text-xs italic text-red-500">Please choose a password.</p> -->
                                 <!-- <span *ngIf="addTherapistForm.hasError('required', 'password') && addTherapistForm.controls['password'].dirty" class="text-xs italic text-red-500">Password is required.</span> -->
                                 <span *ngIf="addTherapistForm.hasError('whitespace', 'password') && addTherapistForm.controls['password'].dirty" class="text-xs italic text-red-500">Password cannot be empty or spaces only.</span>
-                                <span *ngIf="addTherapistForm.hasError('minlength', 'password') && addTherapistForm.controls['password'].dirty" class="text-xs italic text-red-500">Password should be atleast 4 characters long.</span>
+                                <span *ngIf="addTherapistForm.hasError('minlength', 'password') && addTherapistForm.controls['password'].dirty" class="text-xs italic text-red-500">Password should be atleast 8 characters long.</span>
 							</div>
 							<div class="md:ml-2">
 								<label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white" for="c_password">
@@ -85,7 +86,7 @@
 							</div>
 						</div>
                         <div>
-                            <!-- <span class="italic text-red-800">{{error}}</span> -->
+                            <span class="italic text-red-800">{{error}}</span>
                             <span class="italic text-green-700">{{message}}</span>
                         </div>
 						<div class="mb-6 text-center">
