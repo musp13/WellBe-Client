@@ -30,7 +30,8 @@ export class AdminLoginEffects {
                                         this.checkAdminService.isLoggedIn$.next(true);
                                         const encryptedAdminId = this.encryptionService.encrypt(result.data.adminId);
                                         localStorage.setItem("adminId", encryptedAdminId);
-                                        localStorage.setItem("admin_access_token", result.admin_token);
+                                        if(result.admin_token)
+                                            localStorage.setItem("admin_access_token", result.admin_token?result.admin_token:'');
                                         return adminLoginSuccess({admin: result.data})
                                     }),
                                     catchError( error=> of(adminLoginFailure({error})))

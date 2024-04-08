@@ -6,13 +6,20 @@ import { ApiResponse } from '../../interfaces/apiResponse';
 @Injectable({
   providedIn: 'root'
 })
-export class GetTherapistListService {
+export class UserManageService {
   http = inject(HttpClient);
 
   constructor() { }
 
-  getTherapistList()
-  {
-    return this.http.get<ApiResponse>(`${apiUrls.adminApi}get_therapist_list`);
+  blockToggle(userId: string){
+
+    return this.http.patch<ApiResponse>(`${apiUrls.adminApi}user_block_toggle/${userId}`,{});
+    
+  }
+
+  deleteUser(userId: string){
+
+    return this.http.patch<ApiResponse>(`${apiUrls.adminApi}delete_user/${userId}`,{});
+    
   }
 }

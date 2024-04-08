@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { apiUrls } from '../../api.urls';
+import { ApiResponse } from '../../interfaces/apiResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class TherapistLogoutService {
 
   therapistLogout()
   {
-    return this.http.post<any>(`${apiUrls.therapistsApi}therapist_logout`, {}, {withCredentials: true});
+    return this.http.post<ApiResponse>(`${apiUrls.therapistsApi}therapist_logout`, {}, {withCredentials: true});
   }
   
 }

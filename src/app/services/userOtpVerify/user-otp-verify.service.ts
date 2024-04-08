@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { apiUrls } from '../../api.urls';
+import { ApiResponse } from '../../interfaces/apiResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,13 @@ export class UserOtpVerifyService {
   verifyOTP(otpFormData: FormData, userId:string, otp: string){
     console.log(`insidde verify otp service , check userId = ${ userId} `);
     
-    return this.http.post<any>(`${apiUrls.usersApi}verify_user?userId=${userId}`, {otp: otp} , {withCredentials: true});
+    return this.http.patch<ApiResponse>(`${apiUrls.usersApi}verify_user?userId=${userId}`, {otp: otp} , {withCredentials: true});
     //
   }
 
   resendOTP(userId: string)
   {
-    return this.http.post<any>(`${apiUrls.usersApi}resend_otp`, {userId: userId}, {withCredentials: true});
+    return this.http.patch<ApiResponse>(`${apiUrls.usersApi}resend_otp`, {userId: userId}, {withCredentials: true});
   }
 
   constructor() { }

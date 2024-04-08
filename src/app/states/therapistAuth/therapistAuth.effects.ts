@@ -29,7 +29,8 @@ export class TherapistLoginEffects {
                                         this.checkTherapistService.isLoggedIn$.next(true);
                                         const encryptedTherapistId = this.encryptionService.encrypt(result.data.therapistId);
                                         localStorage.setItem("therapistId", encryptedTherapistId);
-                                        localStorage.setItem("therapist_access_token", result.therapist_token);
+                                        if(result.therapist_token)
+                                            localStorage.setItem("therapist_access_token", result.therapist_token?result.therapist_token:'');
                                         return therapistLoginSuccess({therapist: result.data})
                                     }),
                                     catchError( error=>{

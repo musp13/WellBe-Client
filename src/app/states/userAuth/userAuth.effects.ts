@@ -28,7 +28,8 @@ export class UserLoginEffects {
                                         this.checkUserService.isLoggedIn$.next(true);
                                         const encryptedUserId = this.encryptionService.encrypt(result.data.userId);
                                         localStorage.setItem("userId", encryptedUserId);
-                                        localStorage.setItem("user_access_token", result.user_token);
+                                        if(result.user_token)
+                                            localStorage.setItem("user_access_token", result.user_token?result.user_token:'');
                                         return userLoginSuccess({user: result.data})
                                     }),
                                     catchError( error=>{

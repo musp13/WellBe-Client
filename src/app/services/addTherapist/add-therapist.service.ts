@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { apiUrls } from '../../api.urls';
+import { Therapist } from '../../interfaces/therapist';
+import { ApiResponse } from '../../interfaces/apiResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +12,9 @@ export class AddTherapistService {
 
   constructor() { }
 
-  addTherapist(addTherapistObj: any)
+  addTherapist(addTherapistObj: Therapist)
   {
     //return this.http.post<any>(`${apiUrls.therapistsApi}register_therapist`, addTherapistObj, {withCredentials:true});
-    return this.http.post<any>(`${apiUrls.adminApi}add_therapist`, addTherapistObj);
+    return this.http.post<ApiResponse>(`${apiUrls.adminApi}add_therapist`, addTherapistObj);
   }
 }

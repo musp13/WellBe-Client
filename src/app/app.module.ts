@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -48,6 +48,10 @@ import { ConfirmBoxConfigModule, DialogConfigModule, NgxAwesomePopupModule, Toas
 import { UserTableComponent } from './components/shared/user-table/user-table.component';
 import { TherapistListComponent } from './components/admin/therapist-list/therapist-list.component';
 import { UserListComponent } from './components/admin/user-list/user-list.component';
+import { MatConfirmDialogComponent } from './components/shared/mat-confirm-dialog/mat-confirm-dialog.component';
+import { ChangePasswordComponent } from './components/shared/change-password/change-password.component';
+import { ForgotPasswordComponent } from './components/shared/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/shared/reset-password/reset-password.component';
 
 const appRoutes: Routes = [
   {path:'admin',component: AdminLayoutComponent,
@@ -65,6 +69,8 @@ const appRoutes: Routes = [
       {path: 'login', component: TherapistLoginComponent, canActivate: [therapistLoggedOutGuard]},
       {path: 'home', component: TherapistHomeComponent, canActivate: [therapistLoggedInGuard]},
       {path: 'otp_verification', component: OtpVerificationComponent, canActivate: [therapistLoggedOutGuard]},
+      {path: 'forgot_password', component: ForgotPasswordComponent, canActivate: [therapistLoggedOutGuard]},
+      {path: 'reset_password/:token', component: ResetPasswordComponent, canActivate: [therapistLoggedOutGuard]},
       {path: '', redirectTo: '/therapist/login', pathMatch: 'full'},
     ]
   },
@@ -106,6 +112,10 @@ const appRoutes: Routes = [
     UserTableComponent,
     TherapistListComponent,
     UserListComponent,
+    MatConfirmDialogComponent,
+    ChangePasswordComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

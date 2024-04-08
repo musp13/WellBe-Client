@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { Therapist } from "../../interfaces/therapist";
-import { therapistLogin, therapistLoginFailure, therapistLoginSuccess, therapistLogout, therapistLogoutSuccess } from "./therapistAuth.actions";
+import { therapistLogin, therapistLoginFailure, therapistLoginSuccess, therapistLogout, therapistLogoutSuccess, therapistReset } from "./therapistAuth.actions";
 
 export interface TherapistLoginState{
     error: string | null,
@@ -20,5 +20,7 @@ export const therapistLoginReducer = createReducer( initialState,
                                                     on(therapistLoginFailure, (state, {error})=> ({...state, error, isLoading: false}) ),
                                                     
                                                     on(therapistLogout, ()=>initialState),
-                                                    on(therapistLogoutSuccess, ()=> initialState)
+                                                    on(therapistLogoutSuccess, ()=> initialState),
+
+                                                    on(therapistReset , ()=>initialState)
                                               )

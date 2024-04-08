@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { User } from "../../interfaces/user";
-import { userLogin, userLoginFailure, userLoginSuccess, userLogout, userLogoutSuccess } from "./userAuth.actions";
+import { userLogin, userLoginFailure, userLoginSuccess, userLogout, userLogoutSuccess, userReset } from "./userAuth.actions";
 
 
 export interface UserLoginState{
@@ -21,5 +21,7 @@ export const userLoginReducer = createReducer( initialState,
                                                     on(userLoginFailure, (state, {error})=> ({...state, error, isLoading: false}) ),
                                                     
                                                     on(userLogout, ()=>initialState),
-                                                    on(userLogoutSuccess, ()=> initialState)
+                                                    on(userLogoutSuccess, ()=> initialState),
+
+                                                    on(userReset, ()=>initialState)
                                               )

@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { apiUrls } from '../../api.urls';
+import { LoginObject } from '../../interfaces/loginObject';
+import { ApiResponse } from '../../interfaces/apiResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +10,7 @@ import { apiUrls } from '../../api.urls';
 export class GetTherapistIdService {
   http = inject(HttpClient);
   constructor() { }
-  getId(loginObj: any){
-    return this.http.post<any>(`${apiUrls.therapistsApi}get_therapist_id`, loginObj);
+  getId(loginObj: LoginObject){
+    return this.http.post<ApiResponse>(`${apiUrls.therapistsApi}get_therapist_id`, loginObj);
   }
 }
