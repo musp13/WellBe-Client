@@ -1,3 +1,15 @@
 .disabled{
     background-color: gray;
 }
+
+/* .error-message {
+    min-height: 20px; /* Reserve space for error text 
+    font-size: 0.75rem; /* Small font size for error messages 
+    font-style: italic;
+    color: #ff0000;
+}
+*/
+.hidden-error {
+    visibility: hidden;
+}
+ 

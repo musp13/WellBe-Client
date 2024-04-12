@@ -7,6 +7,6 @@ export const userLoginFailure = createAction('[User] Login Failure', props<{ err
 
 export const userLogout = createAction('[User] User Logout');
 export const userLogoutSuccess = createAction('[User] Logout Success');
-export const userLogoutFailure = createAction('[User] Logout Failure', (error:any)=> ({error}));
+export const userLogoutFailure = createAction('[User] Logout Failure', (error)=> ({error}));
 
 export const userReset = createAction('[User] User Reset');

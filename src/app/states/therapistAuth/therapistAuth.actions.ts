@@ -7,6 +7,6 @@ export const therapistLoginFailure = createAction('[Therapist] Login Failure', p
 
 export const therapistLogout = createAction('[Therapist] Therapist Logout');
 export const therapistLogoutSuccess = createAction('[Therapist] Logout Success');
-export const therapistLogoutFailure = createAction('[Therapist] Logout Failure', (error:any)=> ({error}));
+export const therapistLogoutFailure = createAction('[Therapist] Logout Failure', (error)=> ({error}));
 
 export const therapistReset = createAction('[Therapist] Therapist Reset');

@@ -7,4 +7,4 @@ export const adminLoginFailure = createAction('[Admin] Login Failure', props<{ e
 
 export const adminLogout = createAction('[Admin] Admin Logout');
 export const adminLogoutSuccess = createAction('[Admin] Logout Success');
-export const adminLogoutFailure = createAction('[Admin] Logout Failure', (error:any)=> ({error}));
+export const adminLogoutFailure = createAction('[Admin] Logout Failure', (error)=> ({error}));

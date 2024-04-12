@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserOtpVerifyService } from '../../../services/userOtpVerify/user-otp-verify.service';
-import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { Subscription, interval } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TherapistOtpVerifyService } from '../../../services/therapistOtpVerify/therapist-otp-verify.service';
 
 @Component({
@@ -24,6 +24,9 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
   errorMessage = '';
   userType = '';
   userId = '';
+  router = inject(Router);
+  remainingTime:number = 60;
+  timeInterval!: ReturnType<typeof setInterval>;
 
   otpFormObj = new FormData();
   
@@ -34,6 +37,7 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
   otpVerificationSubscription! : Subscription;
   activatedRouteSubscription! : Subscription;
   resendOtpSubscription!: Subscription;
+  timerSubscription!: Subscription;
 
   constructor(){
   }
@@ -45,12 +49,50 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
       this.userId = params['userId'];
       this.userType = params['userType'];
       console.log(`check userId from params = ${this.userId}`);
+      this.startTimer();
       
     })
-    //throw new Error('Method not implemented.');
+  }
+
+  startTimer(){
+    console.log('hello');
+    
+    this.remainingTime = 60;  
+    /* clearInterval(this.timeInterval);
+    this.timeInterval = setInterval(()=>{
+      if(this.remainingTime>0)
+        this.remainingTime--; */
+      /* else
+      {
+        clearInterval(this.timeInterval);
+        return;
+      }  */
+      /* if(this.remainingTime == 0)
+        {
+          //alert('Your time is out. Otp has been resent')
+          this.resendOTP();
+          return;
+        } */
+     /* },1000);
+     */
+     this.timerSubscription = interval(1000).subscribe(i=>{
+      if(this.remainingTime>0)
+        {
+          this.remainingTime--;
+          console.log('check interval: ',this.remainingTime);
+        } else {
+          // Reset the timer or handle timeout
+          this.timerSubscription.unsubscribe(); // Unsubscribe to prevent memory leaks
+        }
+        
+        
+        
+     })
+
   }
 
   verifyOTP(){
+    
     this.otp = this.otp1 + this.otp2 + this.otp3 + this.otp4 + this.otp5 + this.otp6;
     this.otpFormObj.append('otp',this.otp);
     if(this.userType=='user')
@@ -61,6 +103,7 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
         next: (res)=>{
           this.successMessage = res.message;
           this.errorMessage = '';
+          this.router.navigate(['/user/login']);
         },
         error: (err)=>{
           this.errorMessage = err.error.message;
@@ -76,6 +119,7 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
         next: (res)=>{
           this.successMessage = res.message;
           this.errorMessage = '';
+          this.router.navigate(['/therapist/login']);
         },
         error: (err)=>{
           this.errorMessage = err.error.message;
@@ -93,6 +137,7 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
         next: (res)=>{
           this.successMessage = res.message;
           this.errorMessage = '';
+          this.startTimer();
         },
         error: (err)=>{
           this.errorMessage = err.error.message;
@@ -125,6 +170,12 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
     }
     if(this.resendOtpSubscription){
       this.resendOtpSubscription.unsubscribe();
+    }
+    /* if(this.timeInterval){
+      clearInterval(this.timeInterval);
+    } */
+    if(this.timerSubscription){
+      this.timerSubscription.unsubscribe();
     }
   } 
 }

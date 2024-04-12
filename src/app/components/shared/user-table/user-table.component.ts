@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { therapistReset } from '../../../states/therapistAuth/therapistAuth.actions';
 import { UserManageService } from '../../../services/userManage/user-manage.service';
 import { userReset } from '../../../states/userAuth/userAuth.actions';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-table',
@@ -96,9 +97,19 @@ export class UserTableComponent implements OnInit, OnDestroy {
 
   therapistApproveToggle(therapistId: string, isApproved: boolean|undefined){
     const action = isApproved? "Undo Approve" : "Approve";
-    if(confirm(`Are you sure you want to ${action}`)) {
-      this.confirmTherapistApproveToggle(therapistId);
-    }   
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to ${action}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes, ${action}!`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.confirmTherapistApproveToggle(therapistId);
+      }
+    });  
   }
   confirmTherapistApproveToggle(therapistId: string){
     console.log('Approve button cliccked');
@@ -117,9 +128,20 @@ export class UserTableComponent implements OnInit, OnDestroy {
 
   userBlockToggle(userId: string, isBlocked:boolean|undefined){
     const action = isBlocked? "Unblock" : "Block";
-    if(confirm(`Are you sure you want to ${action} user`)) {
-      this.confirmUserBlockToggle(userId);
-    }     
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to ${action} user?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes, ${action}!`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.confirmUserBlockToggle(userId);
+      }
+    });  
+        
   }
   confirmUserBlockToggle(userId: string){
     if (this.userType==='therapist') {
@@ -169,10 +191,19 @@ export class UserTableComponent implements OnInit, OnDestroy {
   }
 
   deleteUser(userId: string){
-    if(confirm(`Are you sure you want to delete user`)) {
-      this.confirmDeleteUser(userId);
-    }  
-    else return;
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to delete user?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes, delete!`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.confirmDeleteUser(userId);
+      }
+    });
   }
   confirmDeleteUser(userId: string){
     if (this.userType==='therapist') {

@@ -25,7 +25,7 @@
                                 placeholder="Full Name"
                             />
                             <!-- <span *ngIf="signupForm.hasError('required', 'fullName') && signupForm.controls['fullName'].dirty" class="text-xs italic text-red-500">Full Name is required.</span> -->
-                            <span *ngIf="signupForm.hasError('whitespace', 'fullName') && signupForm.controls['fullName'].dirty" class="text-xs italic text-red-500">Full Name cannot be empty or spaces only.</span>
+                            <span><span *ngIf="signupForm.hasError('whitespace', 'fullName') && signupForm.controls['fullName'].dirty" class="text-xs italic text-red-500">Full Name cannot be empty or spaces only.</span></span>
                             <span *ngIf="signupForm.hasError('minlength', 'fullName') && signupForm.controls['fullName'].dirty" class="text-xs italic text-red-500">Full Name should be atleast 3 characters long.</span>
 						</div>
 						<div class="mb-4">
