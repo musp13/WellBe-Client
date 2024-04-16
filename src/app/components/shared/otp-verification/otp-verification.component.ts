@@ -58,6 +58,10 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
     console.log('hello');
     
     this.remainingTime = 60;  
+    // Unsubscribe from the previous timerSubscription if it exists
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+  }
     /* clearInterval(this.timeInterval);
     this.timeInterval = setInterval(()=>{
       if(this.remainingTime>0)
@@ -75,7 +79,7 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
         } */
      /* },1000);
      */
-     this.timerSubscription = interval(1000).subscribe(i=>{
+     this.timerSubscription = interval(1000).subscribe(()=>{
       if(this.remainingTime>0)
         {
           this.remainingTime--;
@@ -84,9 +88,6 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
           // Reset the timer or handle timeout
           this.timerSubscription.unsubscribe(); // Unsubscribe to prevent memory leaks
         }
-        
-        
-        
      })
 
   }
@@ -103,7 +104,7 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
         next: (res)=>{
           this.successMessage = res.message;
           this.errorMessage = '';
-          this.router.navigate(['/user/login']);
+          //this.router.navigate(['/user/login']);
         },
         error: (err)=>{
           this.errorMessage = err.error.message;
@@ -119,7 +120,7 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
         next: (res)=>{
           this.successMessage = res.message;
           this.errorMessage = '';
-          this.router.navigate(['/therapist/login']);
+          //this.router.navigate(['/therapist/login']);
         },
         error: (err)=>{
           this.errorMessage = err.error.message;

@@ -34,6 +34,8 @@ export class UserLoginEffects {
                                     }),
                                     catchError( error=>{
                                         // Extracting error message from the HTTP response
+                                        console.log(error.error.message);
+                                        
                                         let errorMessage = 'An unknown error occurred!';
                                         if (error.error && error.error.message) {
                                             errorMessage = error.error.message;

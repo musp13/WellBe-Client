@@ -12,7 +12,7 @@ import { AdminLoginComponent } from './components/admin/admin-login/admin-login.
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { LogoComponent } from './components/shared/logo/logo.component';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { StoreModule, provideState, provideStore } from '@ngrx/store';
@@ -52,6 +52,8 @@ import { MatConfirmDialogComponent } from './components/shared/mat-confirm-dialo
 import { ChangePasswordComponent } from './components/shared/change-password/change-password.component';
 import { ForgotPasswordComponent } from './components/shared/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/shared/reset-password/reset-password.component';
+import { AddJournalEntryComponent } from './components/user/add-journal-entry/add-journal-entry.component';
+import { ViewJournalsComponent } from './components/user/view-journals/view-journals.component';
 
 const appRoutes: Routes = [
   {path:'admin',component: AdminLayoutComponent,
@@ -80,6 +82,8 @@ const appRoutes: Routes = [
       {path: 'signup', component: UserSignupComponent, canActivate: [userLoggedOutGuard]},
       {path: 'home', component: UserHomeComponent}, /* , canActivate: [userLoggedInGuard] */
       {path: 'otp_verification', component: OtpVerificationComponent, canActivate: [userLoggedOutGuard]},
+      {path: 'journal', component: AddJournalEntryComponent, canActivate: [userLoggedInGuard]},
+      {path: 'view_journals', component: ViewJournalsComponent, canActivate: [userLoggedInGuard]},
       {path: '', redirectTo: '/user/login', pathMatch: 'full'},
     ]
   },
@@ -116,6 +120,8 @@ const appRoutes: Routes = [
     ChangePasswordComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    AddJournalEntryComponent,
+    ViewJournalsComponent,
   ],
   imports: [
     BrowserModule,
@@ -130,7 +136,8 @@ const appRoutes: Routes = [
     NgxAwesomePopupModule.forRoot(),// Essential, mandatory main module.
     DialogConfigModule.forRoot(), // Needed for instantiating dynamic components.
     ConfirmBoxConfigModule.forRoot(), // Needed for instantiating confirm boxes.
-    ToastNotificationConfigModule.forRoot() // Needed for instantiating toast notifications.
+    ToastNotificationConfigModule.forRoot(), // Needed for instantiating toast notifications.
+    DatePipe
   ],
   providers: [
     provideClientHydration(),

@@ -61,28 +61,30 @@
                   </td>
                   <td *ngIf="isTherapist(user)" (click)="therapistApproveToggle(user.therapistId, user.isApproved)" class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                     <ng-container *ngIf="user.isApproved; else notApproved">
-                      <button type="button" class="inline-flex items-center gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-green-600 hover:text-green-800 disabled:opacity-50 disabled:pointer-events-none"><i class="fa-solid fa-check text-xl text-green-600 hover:text-green-800"></i></button>
+                      <button type="button" class="inline-flex items-center gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-green-600 hover:text-green-800 disabled:opacity-50 disabled:pointer-events-none" title="Approve"><i class="fa-solid fa-check text-xl text-green-600 hover:text-green-800"></i></button>
                       
                     </ng-container>
                     <ng-template #notApproved>
-                      <button type="button" class="inline-flex items-center gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-orange-500 hover:text-orange-700 disabled:opacity-50 disabled:pointer-events-none"><i class="fa-solid fa-xmark  text-xl text-orange-500 hover:text-orange-700"></i></button>
+                      <button type="button" class="inline-flex items-center gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-orange-500 hover:text-orange-700 disabled:opacity-50 disabled:pointer-events-none" title="Undo Approve"><i class="fa-solid fa-xmark  text-xl text-orange-500 hover:text-orange-700"></i></button>
                       
                     </ng-template>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                     
                     <ng-container *ngIf="user.isBlocked; else notBlocked">
-                      <button *ngIf="isTherapist(user)" (click)="userBlockToggle(user.therapistId, user.isBlocked)" type="button" class="inline-flex items-center mr-5 gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-teal-600 hover:text-teal-800 disabled:opacity-50 disabled:pointer-events-none"><i class="fa-solid fa-lock-open"></i></button>          
-                      <button *ngIf="!isTherapist(user)" (click)="userBlockToggle(user.userId, user.isBlocked)" type="button" class="inline-flex items-center mr-5 gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-teal-600 hover:text-teal-800 disabled:opacity-50 disabled:pointer-events-none"><i class="fa-solid fa-lock-open"></i></button>          
+                      <button *ngIf="isTherapist(user)" (click)="userBlockToggle(user.therapistId, user.isBlocked)" type="button" class="inline-flex items-center mr-5 gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-teal-600 hover:text-teal-800 disabled:opacity-50 disabled:pointer-events-none" title="Unblock"><i class="fa-solid fa-lock-open"></i></button>          
+                      <button *ngIf="!isTherapist(user)" (click)="userBlockToggle(user.userId, user.isBlocked)" type="button" class="inline-flex items-center mr-5 gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-teal-600 hover:text-teal-800 disabled:opacity-50 disabled:pointer-events-none" title="Unblock"><i class="fa-solid fa-lock-open"></i></button>          
                     </ng-container>
                     <ng-template #notBlocked>
-                      <button *ngIf="isTherapist(user)" (click)="userBlockToggle(user.therapistId, user.isBlocked)" type="button" class="inline-flex items-center mr-5 gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-teal-600 hover:text-teal-800 disabled:opacity-50 disabled:pointer-events-none"><i class="fa-solid fa-lock"></i></button>
-                      <button *ngIf="!isTherapist(user)" (click)="userBlockToggle(user.userId, user.isBlocked)" type="button" class="inline-flex items-center mr-5 gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-teal-600 hover:text-teal-800 disabled:opacity-50 disabled:pointer-events-none"><i class="fa-solid fa-lock"></i></button>
+                      <button *ngIf="isTherapist(user)" (click)="userBlockToggle(user.therapistId, user.isBlocked)" type="button" class="inline-flex items-center mr-5 gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-teal-600 hover:text-teal-800 disabled:opacity-50 disabled:pointer-events-none" title="Block"><i class="fa-solid fa-lock"></i></button>
+                      <button *ngIf="!isTherapist(user)" (click)="userBlockToggle(user.userId, user.isBlocked)" type="button" class="inline-flex items-center mr-5 gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-teal-600 hover:text-teal-800 disabled:opacity-50 disabled:pointer-events-none" title="Block"><i class="fa-solid fa-lock"></i></button>
                     </ng-template>
                     
-                    <button *ngIf="isTherapist(user)" (click)="deleteUser(user.therapistId)" type="button" class="inline-flex items-center gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 disabled:opacity-50 disabled:pointer-events-none"><i class="fa-solid fa-trash"></i></button>
-                    <button *ngIf="!isTherapist(user)" (click)="deleteUser(user.userId)" type="button" class="inline-flex items-center gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 disabled:opacity-50 disabled:pointer-events-none"><i class="fa-solid fa-trash"></i></button>
+                    <button *ngIf="isTherapist(user)" (click)="deleteUser(user.therapistId)" type="button" class="inline-flex items-center gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 disabled:opacity-50 disabled:pointer-events-none" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                    <button *ngIf="!isTherapist(user)" (click)="deleteUser(user.userId)" type="button" class="inline-flex items-center gap-x-2 text-lg font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 disabled:opacity-50 disabled:pointer-events-none" title="Delete"><i class="fa-solid fa-trash"></i></button>
                   
+
+                    
                   </td>
                 </tr>
   
@@ -110,6 +112,8 @@
     </div>
   </div>
 
+
+  
 
 
 

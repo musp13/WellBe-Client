@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
+/* import 'dotenv/config'
+require('dotenv').config() */
 
 @Injectable({
   providedIn: 'root'

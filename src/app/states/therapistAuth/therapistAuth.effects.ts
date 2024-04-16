@@ -34,6 +34,8 @@ export class TherapistLoginEffects {
                                         return therapistLoginSuccess({therapist: result.data})
                                     }),
                                     catchError( error=>{
+                                        console.error(error.error.message);
+                                        
                                         // Extracting error message from the HTTP response
                                         let errorMessage = 'An unknown error occurred!';
                                         if (error.error && error.error.message) {

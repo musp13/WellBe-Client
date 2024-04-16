@@ -6,12 +6,12 @@ import { Subscription } from 'rxjs';
 import { selectTherapistLoginError } from '../../../states/therapistAuth/therapistAuth.selectors';
 import { therapistLogin } from '../../../states/therapistAuth/therapistAuth.actions';
 import { GetTherapistIdService } from '../../../services/getTherapistId/get-therapist-id.service';
-import {
+/* import {
   ConfirmBoxInitializer,
   DialogLayoutDisplay,
   DisappearanceAnimation,
   AppearanceAnimation
-} from '@costlydeveloper/ngx-awesome-popup';
+} from '@costlydeveloper/ngx-awesome-popup'; */
 
 @Component({
   selector: 'app-therapist-login',
@@ -61,7 +61,7 @@ export class TherapistLoginComponent implements OnInit, OnDestroy {
             this.router.navigate(['therapist/otp_verification'],{ queryParams: { userId: `${therapistId}`, userType: `therapist` } });
           },
           error: (err)=>{
-            console.log(err.error.message);
+            console.log(err.message);
             //this.error = err.error.message;
           }
         })

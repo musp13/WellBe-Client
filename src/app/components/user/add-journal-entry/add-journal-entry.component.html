@@ -1,0 +1,141 @@
+<div class="flex justify-center" style="background-image: url('https://rayoflightthemes.com/wordpress-themes/talking-minds-wordpress-theme/wp-content/uploads/2021/12/Bg_Home_Hero.png'); background-repeat: no-repeat; background-size: 120%;">
+    <section id="gratitude-journal" class="h-1/2 flex flex-col items-center justify-center">
+        <div class=" mt-10">
+            <h1 class="text-4xl font-bold text-[#0694A2]">Gratitude Journal</h1>
+        </div>
+        <form [formGroup]="journalForm" class="">
+        <div id="affirmation-block" style="width: 60vw;" class="mt-14 font-bold text-gray-400 flex flex-col items-start justify-start text-xl"><!--  class=" mx-auto border max-w-sm mt-6 rounded" -->
+            <p>Morning Affirmations</p>
+            <hr class="mt-4 w-full text-gray-500">
+            
+                <!-- <div class=" relative w-full">
+                    <input style="width: 100%;" autocomplete="off" id="affirmations" name="affirmations" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="affirmations" />
+                    <label style="font-size: 20px;font-weight: 600;" for="affirmations" class="absolute left-0 -top-3.5 text-gray-600 text-xl peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Morning Affirmations</label>
+                    <br>hgghghgh
+                </div> -->
+                <!-- <div class="h-screen"> -->
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4  pt-4 w-full">
+        
+                <div class="block rounded-xl border border-blue-300 p-4">
+                                
+                    <h2 class="mt-2 font-semibold text-base sm:text-lg text-gray-600">
+                        <i class="fa-solid fa-fire-flame-curved"></i> Today's focus
+                    </h2>
+                    
+                    <p class="sm:mt-1 block text-sm sm:text-base text-gray-500"> 
+                        <textarea formControlName="todaysFocus" class="h-40 px-3 text-sm py-1 mt-5 outline-none border-gray-300 w-full resize-none border rounded-lg placeholder:text-sm placeholder:text-gray-300" placeholder="Enter Your thoughts here"></textarea>
+                        <span *ngIf="journalForm.hasError('whitespace', 'todaysFocus')" class="text-xs italic text-red-400">*This field is required</span>
+                    </p>
+                </div>
+        
+                <div class="block rounded-xl border border-pink-300 p-4">
+                    
+                    <h2 class="mt-2 font-semibold text-base sm:text-lg text-gray-600">
+                        <i class="fa-solid fa-pencil"></i> What I'm excited about today
+                    </h2>
+                    <p class="sm:mt-1 block text-sm sm:text-base text-gray-500"> 
+                        <textarea formControlName="excitedAbout" class="h-40 px-3 text-sm py-1 mt-5 outline-none border-gray-300 w-full resize-none border rounded-lg placeholder:text-sm placeholder:text-gray-300" placeholder="Enter Your thoughts here"></textarea>
+                    </p>
+                </div>
+        
+                <div class="block rounded-xl border border-pink-300 p-4">
+                                
+                    <h2 class="mt-2 font-semibold text-base sm:text-lg text-gray-600">
+                        <i class="fa-solid fa-pencil"></i> An affirmation for today
+                    </h2>
+                    <p class="sm:mt-1 block text-sm sm:text-base text-gray-500"> 
+                        <textarea formControlName="affirmation" class="h-40 px-3 text-sm py-1 mt-5 outline-none border-gray-300 w-full resize-none border rounded-lg placeholder:text-sm placeholder:text-gray-300" placeholder="Enter Your thoughts here"></textarea>
+                    </p>
+                </div>
+        
+                <div class="block rounded-xl border border-blue-300 p-4 w-full">
+                    <h2 class="mt-2 font-semibold text-base sm:text-lg text-gray-600">
+                        <i class="fa-solid fa-bullseye"></i> Today's goal
+                    </h2>
+                    <p class="sm:mt-1 block text-sm sm:text-base text-gray-500">
+                        <textarea formControlName="todaysGoal" class="h-40 px-3 text-sm py-1 mt-5 outline-none border-gray-300 w-full resize-none border rounded-lg placeholder:text-sm placeholder:text-gray-300" placeholder="Enter Your thoughts here"></textarea>
+                    </p>
+                </div>
+            </div>
+        </div><!-- affirmation-block closing -->
+
+        <div id="reflection-block" style="width: 60vw;" class=" mt-14 mb-14 font-bold text-gray-400 flex flex-col items-start justify-start text-xl"><!--  class=" mx-auto border max-w-sm mt-6 rounded" -->
+            <p>Evening Reflections</p>
+            <hr class="mt-4 w-full text-gray-500">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4  pt-4">
+        
+                <div class="block rounded-xl border border-blue-300 p-4">
+                                
+                    <h2 class="mt-2 font-semibold text-base sm:text-lg text-gray-600">
+                        <i class="fa-regular fa-rectangle-list"></i> Good things that happened today
+                    </h2>
+                    <p class="sm:mt-1 block text-sm sm:text-base text-gray-300"> 
+                        
+                        <!-- ========================== -->
+                        <input formControlName="goodThings1" style="width: 100%;" autocomplete="off" id="goodThings1" name="goodThings1" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <input formControlName="goodThings2" style="width: 100%;" autocomplete="off" id="goodThings2" name="goodThings2" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <input formControlName="goodThings3" style="width: 100%;" autocomplete="off" id="goodThings3" name="goodThings3" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <!-- ========================== -->   
+
+                    </p>
+                </div>
+        
+                <div class="block rounded-xl border border-pink-300 p-4">
+                    
+                    <h2 class="mt-2 font-semibold text-base sm:text-lg text-gray-600">
+                        <i class="fa-solid fa-fire-flame-curved"></i> Things I did today that made a positive difference
+                    </h2>
+                    <p class="sm:mt-1 block text-sm sm:text-base text-gray-300"> 
+                        <!-- ========================== -->
+                        <input formControlName="positiveActions1" style="width: 100%;" autocomplete="off" id="positiveDifference1" name="positiveDifference1" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <input formControlName="positiveActions2" style="width: 100%;" autocomplete="off" id="positiveDifference2" name="positiveDifference2" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <input formControlName="positiveActions3" style="width: 100%;" autocomplete="off" id="positiveDifference3" name="positiveDifference3" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <!-- ========================== -->  
+                    </p>
+                </div>
+        
+                <div class="block rounded-xl border border-pink-300 p-4">
+                                
+                    <h2 class="mt-2 font-semibold text-base sm:text-lg text-gray-600">
+                        <i class="fa-regular fa-rectangle-list"></i> Things I'm grateful for today
+                    </h2>
+                    <p class="sm:mt-1 block text-sm sm:text-base text-gray-300"> 
+                        <!-- ========================== -->
+                        <input formControlName="gratefulFor1" style="width: 100%;" autocomplete="off" id="grateful1" name="grateful1" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <input formControlName="gratefulFor2" style="width: 100%;" autocomplete="off" id="grateful2" name="grateful2" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <input formControlName="gratefulFor3" style="width: 100%;" autocomplete="off" id="grateful3" name="grateful3" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <!-- ========================== -->  
+                    </p>
+                </div>
+                
+                <div class="block rounded-xl border border-blue-300 p-4">
+                    <h2 class="mt-2 font-semibold text-base sm:text-lg text-gray-600">
+                        <i class="fa-regular fa-rectangle-list"></i> People who made you feel good today
+                    </h2>
+                    <p class="sm:mt-1 block text-sm sm:text-base text-gray-300">
+                        <!-- ========================== -->
+                        <input formControlName="peopleMadeFeelGood1" style="width: 100%;" autocomplete="off" id="goodPeople1" name="goodPeople1" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <input formControlName="peopleMadeFeelGood2" style="width: 100%;" autocomplete="off" id="goodPeople2" name="goodPeople2" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <input formControlName="peopleMadeFeelGood3" style="width: 100%;" autocomplete="off" id="goodPeople3" name="goodPeople3" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <!-- ========================== -->
+                    </p>
+                </div>
+            </div>
+        </div><!-- reflection-block closing -->
+
+        <!--  <div class="fixed bottom-32 right-32 p-4">
+            <button class="bg-gray-800 text-white rounded-full w-10 h-10 flex items-center justify-center" onclick="addEntry()">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div> -->
+
+
+
+        <div class="mb-14 flex max-w-sm rounded-xl bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5 shadow-lg">
+            <button [disabled]="journalForm.invalid" [class.disabled]="journalForm.invalid" (click)="addEntry()" class="flex-1 font-bold text-xl bg-white px-6 py-3 rounded-xl text-gray-600">Add Entry</button>
+        </div>
+    </form>
+    </section>
+</div>
