@@ -15,4 +15,12 @@ export class AddJournalService {
   addJournal(addJournalObj: Journal){
     return this.http.post<ApiResponse>(`${apiUrls.usersApi}add_journal`, addJournalObj);
   }
+
+  getMyJournal(journalId: string) {
+    return this.http.get<ApiResponse>(`${apiUrls.usersApi}get_my_journal/${journalId}`);
+  }
+
+  editJournal(journalId: string, journalData: Journal) {
+    return this.http.patch<ApiResponse>(`${apiUrls.usersApi}edit_journal/${journalId}`, journalData);
+  }
 }

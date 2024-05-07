@@ -54,43 +54,23 @@ import { ForgotPasswordComponent } from './components/shared/forgot-password/for
 import { ResetPasswordComponent } from './components/shared/reset-password/reset-password.component';
 import { AddJournalEntryComponent } from './components/user/add-journal-entry/add-journal-entry.component';
 import { ViewJournalsComponent } from './components/user/view-journals/view-journals.component';
+import { ProfileComponent } from './components/therapist/profile/profile.component';
+import { Button1Component } from './components/shared/buttons/button1/button1.component';
+import { BookAppointmentComponent } from './components/user/book-appointment/book-appointment.component';
+import { AvailabilityFormComponent } from './components/therapist/availability-form/availability-form.component';
+import { MarkLeaveComponent } from './components/therapist/mark-leave/mark-leave.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatButtonModule } from '@angular/material/button';
+import {MatDatepickerInput, MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { AppointmentsListComponent } from './components/shared/appointments-list/appointments-list.component';
+import { TherapistAppointmentListComponent } from './components/therapist/therapist-appointment-list/therapist-appointment-list.component';
+import { AppointmentDetailsComponent } from './components/shared/appointment-details/appointment-details.component';
+import { authenticationErrorHandlingInterceptor } from './interceptors/authenticationErrorHandling/authentication-error-handling.interceptor';
+/* import { Button1Component } from './components/shared/button1/button1.component'; */
 
-const appRoutes: Routes = [
-  {path:'admin',component: AdminLayoutComponent,
-    children: [
-      {path: 'login', component: AdminLoginComponent, canActivate: [adminLoggedOutGuard]},
-      {path: 'home', component: AdminHomeComponent, canActivate: [adminLoggedInGuard]},
-      {path: 'add_therapist', component: AdminAddTherapistComponent, canActivate: [adminLoggedInGuard]},
-      {path: 'user_list', component: UserListComponent, canActivate: [adminLoggedInGuard]},
-      {path: 'therapist_list', component: TherapistListComponent, canActivate: [adminLoggedInGuard]},
-      {path: '', redirectTo: '/admin/login', pathMatch: 'full'},
-    ]
-  },
-  {path:'therapist', component: TherapistLayoutComponent,
-    children: [
-      {path: 'login', component: TherapistLoginComponent, canActivate: [therapistLoggedOutGuard]},
-      {path: 'home', component: TherapistHomeComponent, canActivate: [therapistLoggedInGuard]},
-      {path: 'otp_verification', component: OtpVerificationComponent, canActivate: [therapistLoggedOutGuard]},
-      {path: 'forgot_password', component: ForgotPasswordComponent, canActivate: [therapistLoggedOutGuard]},
-      {path: 'reset_password/:token', component: ResetPasswordComponent, canActivate: [therapistLoggedOutGuard]},
-      {path: '', redirectTo: '/therapist/login', pathMatch: 'full'},
-    ]
-  },
-  {path:'user', component: UserLayoutComponent,
-    children: [
-      {path: 'login', component: UserLoginComponent, canActivate: [userLoggedOutGuard]},
-      {path: 'signup', component: UserSignupComponent, canActivate: [userLoggedOutGuard]},
-      {path: 'home', component: UserHomeComponent}, /* , canActivate: [userLoggedInGuard] */
-      {path: 'otp_verification', component: OtpVerificationComponent, canActivate: [userLoggedOutGuard]},
-      {path: 'journal', component: AddJournalEntryComponent, canActivate: [userLoggedInGuard]},
-      {path: 'view_journals', component: ViewJournalsComponent, canActivate: [userLoggedInGuard]},
-      {path: '', redirectTo: '/user/login', pathMatch: 'full'},
-    ]
-  },
-  //{path: '', redirectTo: '/user/login', pathMatch: 'full'}
-  {path: '', redirectTo: '/user/home', pathMatch: 'full' },
-  {path: '*', redirectTo: '/user/home', pathMatch: 'full'}
-]
 
 @NgModule({
   declarations: [
@@ -122,11 +102,19 @@ const appRoutes: Routes = [
     ResetPasswordComponent,
     AddJournalEntryComponent,
     ViewJournalsComponent,
+    ProfileComponent,
+    Button1Component,
+    BookAppointmentComponent,
+    AvailabilityFormComponent,
+    MarkLeaveComponent,
+    AppointmentsListComponent,
+    TherapistAppointmentListComponent,
+    AppointmentDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true}),
+    //RouterModule.forRoot(routes, { enableTracing: true}),
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
@@ -137,16 +125,24 @@ const appRoutes: Routes = [
     DialogConfigModule.forRoot(), // Needed for instantiating dynamic components.
     ConfirmBoxConfigModule.forRoot(), // Needed for instantiating confirm boxes.
     ToastNotificationConfigModule.forRoot(), // Needed for instantiating toast notifications.
-    DatePipe
+    DatePipe,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatDatepickerInput,
+    MatInputModule,
+    MatNativeDateModule
   ],
   providers: [
     provideClientHydration(),
-    provideHttpClient(withFetch(), withInterceptors([paramsInterceptor,credentialsInterceptor,loggingInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([paramsInterceptor,credentialsInterceptor,loggingInterceptor, authenticationErrorHandlingInterceptor])),
     provideStore(),
     provideState({name:'adminLogin', reducer: adminLoginReducer}),
     provideState({name:'therapistLogin', reducer: therapistLoginReducer}),
     provideState({name:'userLogin', reducer: userLoginReducer}),
-    provideEffects([AdminLoginEffects, TherapistLoginEffects, UserLoginEffects])
+    provideEffects([AdminLoginEffects, TherapistLoginEffects, UserLoginEffects]),
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

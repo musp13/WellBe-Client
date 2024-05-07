@@ -1,0 +1,125 @@
+<!-- <section class="font-body "> -->
+    <div class="bg-[#F4FCFA]">
+        
+        <div class="container mx-auto py-8">
+            <div>
+                <!-- [style.visibility]="editMode? 'hidden' : 'visible' " -->
+                <a *ngIf="!editMode" class="h-10 ms-5 inline-flex items-center justify-center px-6 py-3 mb-5 text-lg text-white bg-[#88dacd] rounded-md hover:bg-[#79c2b6] sm:w-auto sm:mb-0 cursor-pointer" 
+                (click)="toggleEdit()"
+                data-primary="green-400" 
+                data-rounded="rounded-2xl" 
+                data-primary-reset="{}">
+                    <span class="drop-shadow-md inline-flex items-center justify-center">Edit Profile&nbsp;<i class="fa-solid fa-pencil"></i></span>
+                </a>  
+            </div>
+            <div>
+                <a *ngIf="editMode" class="h-10 ms-5 inline-flex items-center justify-center px-6 py-3 mb-5 text-lg text-white bg-[#88dacd] rounded-md hover:bg-[#79c2b6] sm:w-auto sm:mb-0 cursor-pointer" 
+                (click)="editProfile()"
+                data-primary="green-400" 
+                data-rounded="rounded-2xl" 
+                data-primary-reset="{}">
+                    <span class="drop-shadow-md inline-flex items-center justify-center">Save Changes&nbsp;<i class="fa-regular fa-floppy-disk"></i></span>
+                </a>  
+            </div>
+            
+            <div class="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4 mt-2">
+                <div class="col-span-4 sm:col-span-3">
+                    <div class="bg-white shadow rounded-lg p-6">
+                        <div class="flex flex-col items-center">
+                            <img src="https://randomuser.me/api/portraits/men/94.jpg" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
+    
+                            <!-- </img> -->
+
+                            <!-- edit form starts---------- -->
+                            <form [formGroup]="editProfileForm">
+                                <h1 *ngIf="!editMode" class="text-xl font-bold">{{therapistDetails.fullName}}</h1>
+                                <ng-container *ngIf="editMode">
+                                    <div class="mb-4">
+                                        <label class="block text-gray-700 font-bold mb-2" for="name">
+                                            Name
+                                        </label>
+                                        <input formControlName="fullName"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            id="name" type="text" placeholder="Enter your name" [value]="therapistDetails.fullName">
+                                    </div>
+                                </ng-container>
+
+                                <p *ngIf="!editMode" class="text-gray-700">{{therapistDetails.userName}}</p>
+                                <ng-container *ngIf="editMode && therapistDetails">
+                                    <div class="mb-4">
+                                        <label class="block text-gray-700 font-bold mb-2" for="userName">
+                                            Username
+                                        </label>
+                                        <input formControlName="userName"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            id="userName" type="text" placeholder="Enter your username" [value]="therapistDetails.userName">
+                                    </div>
+                                </ng-container>
+                                <div class="mt-6 flex flex-wrap gap-4 justify-center">
+                                    <!-- <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Contact</a>
+                                    <a href="#" class="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded">Resume</a> -->
+                                    <p *ngIf="therapistDetails.qualifications.length==0" class="text-xs">Please Add Your Qualifications <i class="fa-solid fa-pencil"></i></p>
+                                    <p *ngFor="let qualification of therapistDetails.qualifications">{{qualification}}</p>
+                                </div>
+                            </form>
+                        </div>
+                        <hr class="my-6 border-t border-gray-300">
+                        <div class="flex flex-col">
+                            <span class="text-gray-700 uppercase font-bold tracking-wider mb-2">Specializations</span>
+                            <ul> 
+                                <li *ngIf="!therapistDetails.specializations || therapistDetails.specializations.length === 0"
+                                    class="text-xs">
+                                    Please Add Your Specializations <i class="fa-solid fa-pencil"></i>
+                                </li>
+                                <li *ngFor="let specialization of therapistDetails.specializations" class="mb-2">{{specialization}}</li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-4 sm:col-span-9">
+                    <div class="bg-white shadow rounded-lg p-6">
+                        <h2 class="text-xl font-bold mb-4">About Me</h2>
+                        <p *ngIf="!therapistDetails.bio" class="text-gray-700 text-xs">Please Add Your Bio <i class="fa-solid fa-pencil"></i>
+                        </p>
+                        <p class="text-gray-700">{{therapistDetails.bio}}
+                        </p>
+    
+                        <h2 class="text-xl font-bold mt-6 mb-4">Experience</h2>
+                        <!-- ------empty message---------- -->
+                        <div *ngIf="!therapistDetails.experiences || therapistDetails.experiences.length === 0" class="mb-6">
+                            <p class="mt-2 text-xs">
+                                Add Your Experience If Any <i class="fa-solid fa-pencil"></i>
+                            </p>
+                        </div>
+                        <!-- ------empty message---------- -->
+                        <div class="mb-6">
+                            <div class="flex justify-between flex-wrap gap-2 w-full">
+                                <span class="text-gray-700 font-bold">Clinical Psychologist</span>
+                                <p>
+                                    <span class="text-gray-700 mr-2">at ABC Company</span>
+                                    <span class="text-gray-700">2017 - 2019</span>
+                                </p>
+                            </div>
+                            <p class="mt-2">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus est vitae
+                                tortor ullamcorper, ut vestibulum velit convallis. Aenean posuere risus non velit egestas
+                                suscipit.
+                            </p>
+                        </div>
+
+                        <!-- --------Availability------------- -->
+                        <h2 class="text-xl font-bold mb-4">Availability</h2>
+                        <app-availability-form></app-availability-form>
+                        <!-- ------------------------- -->
+
+                        <!-- --------Unavailability------------- -->
+                        <h2 class="text-xl font-bold mb-4 mt-9">Mark Leave</h2>
+                        <app-mark-leave></app-mark-leave>
+                        <!-- ------------------------- -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- </section> -->

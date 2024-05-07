@@ -11,6 +11,10 @@ export class TherapistOtpVerifyService {
 
   constructor() { }
 
+  setOTP(therapistId:string){
+    return this.http.post<ApiResponse>(`${apiUrls.therapistsApi}set_otp/${therapistId}`, {therapistId: therapistId});
+  }
+
   verifyOTP(therapistId: string, otp: string)
   {
     return this.http.patch<ApiResponse>(`${apiUrls.therapistsApi}verify_therapist?therapistId=${therapistId}`, {otp: otp});
@@ -18,6 +22,6 @@ export class TherapistOtpVerifyService {
 
   resendOTP(therapistId: string)
   {
-    return this.http.patch<ApiResponse>(`${apiUrls.therapistsApi}resend_otp`, {therapistId: therapistId}, {withCredentials: true});
+    return this.http.post<ApiResponse>(`${apiUrls.therapistsApi}resend_otp`, {therapistId: therapistId}, {withCredentials: true});
   }
 }

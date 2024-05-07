@@ -1,0 +1,108 @@
+<section class="pt-5 min-h-72" style="background-image: url('https://rayoflightthemes.com/wordpress-themes/talking-minds-wordpress-theme/wp-content/uploads/2021/12/Bg_Home_Hero.png'); background-size: cover;">
+    <!--   -->
+
+    <!-- <h1 class="text-3xl font-bold mb-6 text-center pt-10">Appointment Details</h1> -->
+    
+    <!-- try new card---------------- -->
+    <div class="border-orange-50 border-2 max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-5">
+        <!-- <div class="p-8 flex items-center justify-center"> -->
+            <div class="bg-white max-w-2xl shadow overflow-hidden sm:rounded-lg">
+                <div class="px-4 py-10 sm:px-6">
+                    <h3 class="text-2xl leading-6 font-medium text-gray-900">
+                        Appointment Details
+                    </h3>
+                    <!-- <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                        Details and informations about user.
+                    </p> -->
+                </div>
+                <div class="border-t border-[#ffefdf]">
+                    <dl>
+                        <div class="bg-[#fffaf4] px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Appointment Number
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                {{appointmentDetails.appointmentNumber}}
+                            </dd>
+                        </div>
+                        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Client Name
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                {{appointmentDetails.clientName}}
+                            </dd>
+                        </div>
+                        <div class="bg-[#fffaf4] px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Date
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                {{appointmentDetails.date | date}}
+                            </dd>
+                        </div>
+                        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Time
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                {{getFormattedTime(appointmentDetails.slotNumber)}}
+                            </dd>
+                        </div>
+                        <div class="bg-[#fffaf4] px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Therapist Name
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                {{appointmentDetails.therapistName}}
+                            </dd>
+                        </div>
+                        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Status
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                {{appointmentDetails.status}}
+                            </dd>
+                        </div>
+                        <div class="bg-[#fffaf4] px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Duration
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                {{appointmentDetails.duration}} minutes
+                            </dd>
+                        </div>
+                        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Message
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                {{appointmentDetails.message || 'N/A'}}
+                            </dd>
+                        </div>
+                        <div class="bg-[#fffaf4] px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Notes
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                {{appointmentDetails.notes || 'N/A'}}
+                            </dd>
+                        </div>
+                        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Participants
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                {{appointmentDetails.participants}}
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        <!-- </div> -->
+    </div>
+    
+      
+
+</section>

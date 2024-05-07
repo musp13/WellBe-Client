@@ -1,0 +1,94 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+
+$custom-primary-pallette: (
+    50: #cafffb,
+    100: #abfff9,
+    200: #62fcf1,
+    300: #43ece1,
+    400: #31dace,
+    500: #26ABA3,
+    600: #11968d,
+    700: #127e77,
+    800: #07615b,
+    900: #085550,
+    // ... continues to 900
+ contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    // ... continues to 900
+  )
+);
+
+$custom-accent-palette: (
+    50: #fef5dc,
+    100: #fdeebe,
+    200: #fde39b,
+    300: #fccd73,
+    400: #fbba4d,
+    500: #F7AB1E,
+    600: #e09b1a,
+    700: #c58a16,
+    800: #aa7912,
+    900: #8f680e,
+    A100: #ffffff,
+    A200: #fffaee,
+    A400: #ffd69b,
+    A700: #ffb741,
+    contrast: (
+        50: rgba(black, 0.87),
+        100: rgba(black, 0.87),
+        200: rgba(black, 0.87),
+        300: rgba(black, 0.87),
+        400: rgba(black, 0.87),
+        500: rgba(black, 0.87),
+        600: rgba(black, 0.87),
+        700: rgba(black, 0.87),
+        800: rgba(black, 0.87),
+        900: rgba(black, 0.87),
+        A100: rgba(black, 0.87),
+        A200: rgba(black, 0.87),
+        A400: rgba(black, 0.87),
+        A700: rgba(black, 0.87),
+    )
+);
+
+//$client-primary: mat.define-palette(mat.$indigo-palette);
+$client-primary: mat.define-palette($custom-primary-pallette);
+//$client-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$client-accent: mat.define-palette($custom-accent-palette);
+
+// The warn palette is optional (defaults to red).
+$client-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$client-theme: mat.define-light-theme((
+  color: (
+    primary: $client-primary,
+    accent: $client-accent,
+    warn: $client-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($client-theme);
+

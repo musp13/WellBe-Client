@@ -1,9 +1,9 @@
-<div id="view-journals" class=" flex flex-col items-center justify-center" style="background-image: url('https://rayoflightthemes.com/wordpress-themes/talking-minds-wordpress-theme/wp-content/uploads/2021/12/Bg_Home_Hero.png'); background-size: cover; background-position: center;">
+<div id="view-journals" class="flex flex-col items-center justify-center min-h-72" style="background-image: url('https://rayoflightthemes.com/wordpress-themes/talking-minds-wordpress-theme/wp-content/uploads/2021/12/Bg_Home_Hero.png'); background-size: cover; background-position: center;">
     <div class="mt-10">
         <h1 class="text-4xl font-bold text-[#0694A2]">My Journals</h1>
     </div>
-    <p style="margin-left: 10vw;" class="pt-5 w-full">
-        <a href="/user/journal" class="h-10 ms-5 mt-5 inline-flex items-center justify-center w-50 px-6 py-3 mb-2 text-lg text-white bg-[#88dacd] rounded-md hover:bg-[#79c2b6] sm:mb-0 md:w-50" data-primary="green-400" data-rounded="rounded-2xl" data-primary-reset="{}">
+    <p style="padding-left: 5vw; right: 0;" class="pt-2 w-full">
+        <a [routerLink]="['/user/journal','add']" class="h-10 ms-5 mt-5 inline-flex items-center justify-center w-50 px-6 py-3 mb-2 text-lg text-white bg-[#88dacd] rounded-md hover:bg-[#79c2b6] sm:mb-0 md:w-50" data-primary="green-400" data-rounded="rounded-2xl" data-primary-reset="{}">
                 <span class="drop-shadow-md">Add New Journal</span>
                 <!-- <svg class="w-4 h-4 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg> -->
                 </a>        
@@ -11,8 +11,9 @@
 
     <!-- -----------journals-------------------------------- -->
     <div class="width-90 flex flex-wrap gap-4 p-6 justify-center text-lg font-serif"><!--   -->
-        <a *ngFor="let journal of journals"
-            class="bg-teal-50 flex-grow text-black border-l-8 border-[#fadebed2] rounded-md px-3 py-2 w-full md:w-5/12 lg:w-3/12">
+        <a *ngFor="let journal of journals" 
+            [routerLink]="['/user/journal', journal['journalId']]"
+            class=" bg-teal-50 hover:bg-[#faf4e8] cursor-pointer flex-grow text-black border-l-8 border-[#fadebed2] rounded-md px-3 py-2 w-full md:w-5/12 lg:w-3/12">
             <!-- I want to stay happy today -->
             <div class="flex justify-between items-center">
                 {{journal["todaysFocus"]}} 

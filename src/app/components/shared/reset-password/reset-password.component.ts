@@ -34,7 +34,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy{
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(value=>{
       this.token = value['token'];
       console.log(this.token);
-      
     })
     
   }

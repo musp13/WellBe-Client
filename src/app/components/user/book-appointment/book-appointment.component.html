@@ -1,0 +1,188 @@
+<section class="pt-5" style="background-image: url('https://rayoflightthemes.com/wordpress-themes/talking-minds-wordpress-theme/wp-content/uploads/2021/12/Bg_Home_Hero.png'); background-size: cover;">
+
+    <div class="max-w-md mx-auto mt-10 rounded-lg  bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5 shadow-lg overflow-hidden mb-10">
+        <div class="text-2xl py-4 px-6 bg-white text-gray-900 text-center font-bold uppercase rounded-lg mb-0.5">
+            Book an Appointment
+        </div>
+        <form [formGroup]="appointmentForm" class="py-4 px-6 bg-white rounded-lg">
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="name">
+                    Name
+                </label>
+                <input formControlName="fullName"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="name" type="text" placeholder="Enter your name">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="email">
+                    Email
+                </label>
+                <input formControlName="email"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="email" type="email" placeholder="Enter your email">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="phone">
+                    Phone Number (+91)
+                </label>
+                <input formControlName="phoneNo"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="phone" type="tel" placeholder="Enter your phone number">
+                <span *ngIf="appointmentForm.hasError('indianPhoneNumber', 'phoneNo') || appointmentForm.hasError('required', 'phoneNo')" class="text-red-600 text-sm">
+                    * Enter your 10 digit valid phone number</span>
+            </div>
+            <!-- therapist -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="therapist">
+                    Therapist
+                </label>
+                <select formControlName="therapist" (ngModelChange)="resetDateTime()"
+                    class="shadow cursor-pointer appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="therapist" name="therapist">
+                    <option value="" disabled selected>Choose a therapist</option>
+                    <option *ngFor="let therapist of appointmentFormDetails?.therapistList" [value]="therapist._id">{{therapist.fullName}}</option>
+                    <!-- <option value="haircut">GGhhkjhkjhj</option>
+                    <option value="coloring">Hhkhkjk</option>
+                    <option value="styling">Sdtdfdf</option>
+                    <option value="facial">Fddfuygh</option> -->
+                </select>
+                <span *ngIf="appointmentForm.hasError('required', 'therapist')" class="text-sm text-red-600">* Please Choose a Therapist</span>
+            </div>
+            <!-- therapist -->
+            <div *ngIf="availabilityDetails" class="p-3 max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3">
+
+                <div class="availability-container">
+                    <div class="availability-section">
+                        <span class="section-title">Available Days:</span>
+                        <ul class="availability-list text-sm">
+                            <li *ngFor="let availableDay of availabilityDetails.availability" class="availability-item">
+                                {{ availableDay.day }} :
+                                {{ availableDay.shift === 'morning' ? 'Morning Shift (09:00 AM to 01:00 PM)' : availableDay.shift === 'afternoon' ? 'Afternoon Shift (02:00 PM to 06:00 PM)' : 'Full Day (09:00 AM to 06:00 PM)' }}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="leave-section">
+                        <span class="section-title">Leave Dates:</span>
+                        <ul class="leave-list text-sm">
+                            <li *ngFor="let leaveDay of availabilityDetails.leave" class="leave-item">
+                                {{ leaveDay.leaveDate | date: 'MMM d, yyyy' }} :
+                                {{ leaveDay.shift === 'morning' ? 'Morning Shift (09:00 AM to 01:00 PM)' : leaveDay.shift === 'afternoon' ? 'Afternoon Shift (02:00 PM to 06:00 PM)' : 'Full Day (09:00 AM to 06:00 PM)' }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>    
+
+
+
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="date">
+                    Date
+                </label>
+                <!-- <input formControlName="date"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="date" type="date" placeholder="Select a date" [min]="tomorrowDate" [max]="maxDate"> -->
+                <mat-form-field class="w-full">
+                    <mat-label>Choose a date</mat-label>
+                    <input  (dateChange)="onDatePicked($event)" formControlName="date" matInput [matDatepicker]="picker" [matDatepickerFilter]="filterDates" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    
+                </mat-form-field>    
+                <span *ngIf="appointmentForm.get('date')?.disabled" class="text-sm text-red-600">* Please Choose a Therapist To Enable Date</span>
+
+                                        
+            </div>
+            <!-- <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="time">
+                    Time
+                </label>
+                <input formControlName="time"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="time" type="time" placeholder="Select a time">
+            </div> -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="time">
+                    Time (1 Hour)
+                </label>
+                <select formControlName="time"
+                        class="shadow cursor-pointer appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="time">
+                    <option value="" disabled selected>Select a time</option> 
+                    <!-- <option *ngFor="let option of timeSlotOptions" [value]="option.value">{{option.label}}</option> -->
+                    <ng-container *ngFor="let option of timeSlotOptions">
+                        <option [value]="option.value" [disabled]="option.disabled">{{option.label}} <span *ngIf="option.disabled" class="text-sm text-red-600"> &nbsp;({{option.bookingStatus}})</span></option>
+                        
+                    </ng-container>
+                </select>
+                <span *ngIf="appointmentForm.get('time')?.disabled" class="text-sm text-red-600">* Please Choose a Date To Enable Time</span>
+                <span *ngIf="!appointmentForm.get('time')?.disabled && appointmentForm.hasError('required','time')" class="text-sm text-red-600">* Please Choose a Time for the Appointment</span>
+            </div>
+            
+            
+            <!-- <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="duration">
+                    Duration (in hours)
+                </label>
+                <select 
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                    id="duration" name="duration">
+                    <option value="1">1 hour</option>
+                    <option value="2">2 hours</option>
+                    <option value="3">3 hours</option>
+                    <option value="4">4 hours</option>
+                </select>
+            </div> -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="participants">
+                    Number of Participants
+                </label>
+                <!-- <input formControlName="participants"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="participants" type="number" placeholder="Enter number of participants" min="1" max="5"> -->
+                
+                
+                        <div class="" >
+                            <div class="relative flex items-center shadow-sm">
+                                <button type="button" (click)="decrementParticipants()" id="decrement-button" class="bg-white-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-teal-50 border border-gray-500 rounded-s-md p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                                    <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
+                                    </svg>
+                                </button>
+                                <input formControlName="participants" type="text" id="participants-input" class="bg-white-50 border-x-0 border-gray-500 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required />
+                                <div class="absolute bottom-1 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 flex items-center text-xs text-gray-400 space-x-1 rtl:space-x-reverse">
+                                    <i class="fa-solid fa-users-line"></i>
+                                    
+                                </div>
+                                <button type="button" (click)="incrementParticipants()" id="increment-button" class="bg-white-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-teal-50 border border-gray-500 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                                    <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <!-- <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 dark:text-gray-400">Please select the number of participants.</p> -->
+                        </div>
+                        <!--  number input closing -->
+
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="message">
+                    Message
+                </label>
+                <textarea formControlName="message"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="message" rows="4" placeholder="Enter any additional information"></textarea>
+            </div>
+            <div class="flex items-center justify-center mb-4">
+                <button (click)="bookAppointment()"  [disabled]="appointmentForm.invalid" [class.disabled]="appointmentForm.invalid"
+                    class="bg-[#26ABA3] text-white py-2 px-4 rounded hover:bg-[#5bcac3] focus:outline-none focus:shadow-outline"
+                    type="button">
+                    Book Appointment
+                </button>
+            </div>
+    
+        </form>
+    </div>
+
+</section>

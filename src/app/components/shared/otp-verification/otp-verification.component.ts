@@ -1,16 +1,18 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { AfterViewInit, Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { FormGroup, FormsModule } from '@angular/forms';
 import { UserOtpVerifyService } from '../../../services/userOtpVerify/user-otp-verify.service';
 import { Subscription, interval } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TherapistOtpVerifyService } from '../../../services/therapistOtpVerify/therapist-otp-verify.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-otp-verification',
   templateUrl: './otp-verification.component.html',
   styleUrl: './otp-verification.component.css'
 })
-export class OtpVerificationComponent implements OnInit, OnDestroy{
+export class OtpVerificationComponent implements OnInit, AfterViewInit, OnDestroy{
+    
   otp1: string = '';
   otp2: string = '';
   otp3: string = '';
@@ -33,25 +35,71 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
   userOtpVerifyService = inject(UserOtpVerifyService);
   therapistOtpVerifyService = inject(TherapistOtpVerifyService);
   activatedRoute = inject(ActivatedRoute);
+  toastr = inject(ToastrService);
 
   otpVerificationSubscription! : Subscription;
   activatedRouteSubscription! : Subscription;
   resendOtpSubscription!: Subscription;
+  setOtpSubscription!: Subscription;
   timerSubscription!: Subscription;
 
   constructor(){
+    //this.startTimer();
   }
 
   ngOnInit(): void {
     //this.otpData = { otp: this.otp };
-    
+      
     this.activatedRouteSubscription = this.activatedRoute.queryParams.subscribe(params=>{
       this.userId = params['userId'];
       this.userType = params['userType'];
       console.log(`check userId from params = ${this.userId}`);
-      this.startTimer();
-      
-    })
+    });
+
+    this.setOTP();
+    //this.remainingTime = 0;
+    //this.startTimer();
+  }
+
+  ngAfterViewInit(): void {
+    //this.startTimer();
+  }
+
+  setOTP(){
+    //console.log('hello, ngoninit', this.userType, this.userId);
+
+    if(this.userType==='therapist'){
+      this.setOtpSubscription = this.therapistOtpVerifyService.setOTP(this.userId).subscribe({
+        next: (res)=>{
+          this.successMessage = 'Your OTP has been sent to your email';
+          this.errorMessage = '';
+          console.log('hello, ', this.successMessage);
+          if(this.remainingTime==60){
+            this.startTimer();
+          }
+          
+          
+        },
+        error: (err)=>{
+          this.errorMessage = err.error.message;
+          this.successMessage='';
+        }
+      })
+    }
+    else if(this.userType==='user'){
+      this.setOtpSubscription = this.userOtpVerifyService.setOTP(this.userId).subscribe({
+        next: (res)=>{
+          this.successMessage = 'Your OTP has been sent to your email';
+          this.errorMessage = '';
+          this.startTimer();
+          
+        },
+        error: (err)=>{
+          this.errorMessage = err.error.message;
+          this.successMessage='';
+        }
+      })
+    }
   }
 
   startTimer(){
@@ -61,8 +109,21 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
     // Unsubscribe from the previous timerSubscription if it exists
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
-  }
-    /* clearInterval(this.timeInterval);
+    }
+    
+    this.timerSubscription = interval(1000).subscribe(()=>{
+    if(this.remainingTime > 0)
+      {
+        this.remainingTime--;
+        console.log('check interval: ',this.remainingTime);
+      } else {
+        // Reset the timer or handle timeout
+        this.timerSubscription.unsubscribe(); // Unsubscribe to prevent memory leaks
+      }
+    })
+}
+
+  /* clearInterval(this.timeInterval);
     this.timeInterval = setInterval(()=>{
       if(this.remainingTime>0)
         this.remainingTime--; */
@@ -79,18 +140,6 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
         } */
      /* },1000);
      */
-     this.timerSubscription = interval(1000).subscribe(()=>{
-      if(this.remainingTime>0)
-        {
-          this.remainingTime--;
-          console.log('check interval: ',this.remainingTime);
-        } else {
-          // Reset the timer or handle timeout
-          this.timerSubscription.unsubscribe(); // Unsubscribe to prevent memory leaks
-        }
-     })
-
-  }
 
   verifyOTP(){
     
@@ -104,7 +153,8 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
         next: (res)=>{
           this.successMessage = res.message;
           this.errorMessage = '';
-          //this.router.navigate(['/user/login']);
+          this.toastr.success(res.message);
+          this.router.navigate(['/user/login']);
         },
         error: (err)=>{
           this.errorMessage = err.error.message;
@@ -120,7 +170,8 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
         next: (res)=>{
           this.successMessage = res.message;
           this.errorMessage = '';
-          //this.router.navigate(['/therapist/login']);
+          this.toastr.success(res.message);
+          this.router.navigate(['/therapist/login']);
         },
         error: (err)=>{
           this.errorMessage = err.error.message;
@@ -138,6 +189,7 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
         next: (res)=>{
           this.successMessage = res.message;
           this.errorMessage = '';
+          this.remainingTime = 60;
           this.startTimer();
         },
         error: (err)=>{
@@ -152,6 +204,8 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
         next: (res)=>{
           this.successMessage = res.message;
           this.errorMessage = '';
+          this.remainingTime = 60;
+          this.startTimer();
         },
         error: (err)=>{
           this.errorMessage = err.error.message;
@@ -177,6 +231,9 @@ export class OtpVerificationComponent implements OnInit, OnDestroy{
     } */
     if(this.timerSubscription){
       this.timerSubscription.unsubscribe();
+    }
+    if(this.setOtpSubscription){
+      this.setOtpSubscription.unsubscribe();
     }
   } 
 }

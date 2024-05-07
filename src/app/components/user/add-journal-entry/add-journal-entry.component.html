@@ -4,7 +4,7 @@
             <h1 class="text-4xl font-bold text-[#0694A2]">Gratitude Journal</h1>
         </div>
         <form [formGroup]="journalForm" class="">
-        <div id="affirmation-block" style="width: 60vw;" class="mt-14 font-bold text-gray-400 flex flex-col items-start justify-start text-xl"><!--  class=" mx-auto border max-w-sm mt-6 rounded" -->
+        <div id="affirmation-block" style="width: 60vw;" class="mt-10 font-bold text-gray-400 flex flex-col items-start justify-start text-xl"><!--  class=" mx-auto border max-w-sm mt-6 rounded" -->
             <p>Morning Affirmations</p>
             <hr class="mt-4 w-full text-gray-500">
             
@@ -24,7 +24,7 @@
                     </h2>
                     
                     <p class="sm:mt-1 block text-sm sm:text-base text-gray-500"> 
-                        <textarea formControlName="todaysFocus" class="h-40 px-3 text-sm py-1 mt-5 outline-none border-gray-300 w-full resize-none border rounded-lg placeholder:text-sm placeholder:text-gray-300" placeholder="Enter Your thoughts here"></textarea>
+                        <textarea formControlName="todaysFocus" class="h-40 px-3 text-sm py-1 mt-5 outline-none border-gray-300 w-full resize-none border rounded-lg placeholder:text-sm placeholder:text-gray-300" placeholder="Enter Your thoughts here"><span>{{ journalData && journalData.todaysFocus? journalData.todaysFocus : '' }}</span></textarea>
                         <span *ngIf="journalForm.hasError('whitespace', 'todaysFocus')" class="text-xs italic text-red-400">*This field is required</span>
                     </p>
                 </div>
@@ -35,7 +35,7 @@
                         <i class="fa-solid fa-pencil"></i> What I'm excited about today
                     </h2>
                     <p class="sm:mt-1 block text-sm sm:text-base text-gray-500"> 
-                        <textarea formControlName="excitedAbout" class="h-40 px-3 text-sm py-1 mt-5 outline-none border-gray-300 w-full resize-none border rounded-lg placeholder:text-sm placeholder:text-gray-300" placeholder="Enter Your thoughts here"></textarea>
+                        <textarea formControlName="excitedAbout" class="h-40 px-3 text-sm py-1 mt-5 outline-none border-gray-300 w-full resize-none border rounded-lg placeholder:text-sm placeholder:text-gray-300" placeholder="Enter Your thoughts here">{{ journalData && journalData.excitedAbout? journalData.excitedAbout : '' }}</textarea>
                     </p>
                 </div>
         
@@ -45,7 +45,7 @@
                         <i class="fa-solid fa-pencil"></i> An affirmation for today
                     </h2>
                     <p class="sm:mt-1 block text-sm sm:text-base text-gray-500"> 
-                        <textarea formControlName="affirmation" class="h-40 px-3 text-sm py-1 mt-5 outline-none border-gray-300 w-full resize-none border rounded-lg placeholder:text-sm placeholder:text-gray-300" placeholder="Enter Your thoughts here"></textarea>
+                        <textarea formControlName="affirmation" class="h-40 px-3 text-sm py-1 mt-5 outline-none border-gray-300 w-full resize-none border rounded-lg placeholder:text-sm placeholder:text-gray-300" placeholder="Enter Your thoughts here">{{ journalData && journalData.affirmation? journalData.affirmation : '' }}</textarea><!-- {{ journalData?.affirmation || '' }} -->
                     </p>
                 </div>
         
@@ -54,7 +54,7 @@
                         <i class="fa-solid fa-bullseye"></i> Today's goal
                     </h2>
                     <p class="sm:mt-1 block text-sm sm:text-base text-gray-500">
-                        <textarea formControlName="todaysGoal" class="h-40 px-3 text-sm py-1 mt-5 outline-none border-gray-300 w-full resize-none border rounded-lg placeholder:text-sm placeholder:text-gray-300" placeholder="Enter Your thoughts here"></textarea>
+                        <textarea formControlName="todaysGoal" class="h-40 px-3 text-sm py-1 mt-5 outline-none border-gray-300 w-full resize-none border rounded-lg placeholder:text-sm placeholder:text-gray-300" placeholder="Enter Your thoughts here">{{ journalData && journalData.todaysGoal? journalData.todaysGoal : '' }}</textarea><!-- {{ journalData?.todaysGoal || '' }} -->
                     </p>
                 </div>
             </div>
@@ -74,9 +74,9 @@
                     <p class="sm:mt-1 block text-sm sm:text-base text-gray-300"> 
                         
                         <!-- ========================== -->
-                        <input formControlName="goodThings1" style="width: 100%;" autocomplete="off" id="goodThings1" name="goodThings1" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
-                        <input formControlName="goodThings2" style="width: 100%;" autocomplete="off" id="goodThings2" name="goodThings2" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
-                        <input formControlName="goodThings3" style="width: 100%;" autocomplete="off" id="goodThings3" name="goodThings3" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <input formControlName="goodThings1" style="width: 100%;" autocomplete="off" id="goodThings1" name="goodThings1" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Your thoughts" [value]="journalData && journalData.goodThings1? journalData.goodThings1 : ''" /><!-- journalData?.goodThings1 || '' -->
+                        <input formControlName="goodThings2" style="width: 100%;" autocomplete="off" id="goodThings2" name="goodThings2" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Your thoughts" [value]="journalData && journalData.goodThings2? journalData.goodThings2 : ''" /><!-- journalData?.goodThings2 || '' -->
+                        <input formControlName="goodThings3" style="width: 100%;" autocomplete="off" id="goodThings3" name="goodThings3" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Your thoughts" [value]="journalData && journalData.goodThings3? journalData.goodThings3 : ''" /><!-- journalData?.goodThings3 || '' -->
                         <!-- ========================== -->   
 
                     </p>
@@ -89,9 +89,9 @@
                     </h2>
                     <p class="sm:mt-1 block text-sm sm:text-base text-gray-300"> 
                         <!-- ========================== -->
-                        <input formControlName="positiveActions1" style="width: 100%;" autocomplete="off" id="positiveDifference1" name="positiveDifference1" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
-                        <input formControlName="positiveActions2" style="width: 100%;" autocomplete="off" id="positiveDifference2" name="positiveDifference2" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
-                        <input formControlName="positiveActions3" style="width: 100%;" autocomplete="off" id="positiveDifference3" name="positiveDifference3" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <input formControlName="positiveActions1" style="width: 100%;" autocomplete="off" id="positiveDifference1" name="positiveDifference1" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Your thoughts" [value]="journalData && journalData.positiveActions1? journalData.positiveActions1 : ''"/><!-- journalData?.positiveActions1 || '' -->
+                        <input formControlName="positiveActions2" style="width: 100%;" autocomplete="off" id="positiveDifference2" name="positiveDifference2" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Your thoughts" [value]="journalData && journalData.positiveActions2? journalData.positiveActions2 : ''"/><!-- journalData?.positiveActions2 || '' -->
+                        <input formControlName="positiveActions3" style="width: 100%;" autocomplete="off" id="positiveDifference3" name="positiveDifference3" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Your thoughts" [value]="journalData && journalData.positiveActions3? journalData.positiveActions3 : ''"/><!-- journalData?.positiveActions3 || '' -->
                         <!-- ========================== -->  
                     </p>
                 </div>
@@ -103,9 +103,9 @@
                     </h2>
                     <p class="sm:mt-1 block text-sm sm:text-base text-gray-300"> 
                         <!-- ========================== -->
-                        <input formControlName="gratefulFor1" style="width: 100%;" autocomplete="off" id="grateful1" name="grateful1" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
-                        <input formControlName="gratefulFor2" style="width: 100%;" autocomplete="off" id="grateful2" name="grateful2" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
-                        <input formControlName="gratefulFor3" style="width: 100%;" autocomplete="off" id="grateful3" name="grateful3" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <input formControlName="gratefulFor1" style="width: 100%;" autocomplete="off" id="grateful1" name="grateful1" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Your thoughts" [value]="journalData && journalData.gratefulFor1? journalData.gratefulFor1 : ''"/><!-- journalData?.gratefulFor1 || '' -->
+                        <input formControlName="gratefulFor2" style="width: 100%;" autocomplete="off" id="grateful2" name="grateful2" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Your thoughts" [value]="journalData && journalData.gratefulFor2? journalData.gratefulFor2 : ''"/><!-- journalData?.gratefulFor2 || '' -->
+                        <input formControlName="gratefulFor3" style="width: 100%;" autocomplete="off" id="grateful3" name="grateful3" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Your thoughts" [value]="journalData && journalData.gratefulFor3? journalData.gratefulFor3 : ''"/><!-- journalData?.gratefulFor3 || '' -->
                         <!-- ========================== -->  
                     </p>
                 </div>
@@ -116,9 +116,9 @@
                     </h2>
                     <p class="sm:mt-1 block text-sm sm:text-base text-gray-300">
                         <!-- ========================== -->
-                        <input formControlName="peopleMadeFeelGood1" style="width: 100%;" autocomplete="off" id="goodPeople1" name="goodPeople1" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
-                        <input formControlName="peopleMadeFeelGood2" style="width: 100%;" autocomplete="off" id="goodPeople2" name="goodPeople2" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
-                        <input formControlName="peopleMadeFeelGood3" style="width: 100%;" autocomplete="off" id="goodPeople3" name="goodPeople3" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Your thoughts"/>
+                        <input formControlName="peopleMadeFeelGood1" style="width: 100%;" autocomplete="off" id="goodPeople1" name="goodPeople1" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Your thoughts" [value]="journalData && journalData.peopleMadeFeelGood1? journalData.peopleMadeFeelGood1 : ''"/><!-- journalData?.peopleMadeFeelGood1 || '' -->
+                        <input formControlName="peopleMadeFeelGood2" style="width: 100%;" autocomplete="off" id="goodPeople2" name="goodPeople2" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Your thoughts" [value]="journalData && journalData.peopleMadeFeelGood2? journalData.peopleMadeFeelGood2 : ''"/><!-- journalData?.peopleMadeFeelGood2 || '' -->
+                        <input formControlName="peopleMadeFeelGood3" style="width: 100%;" autocomplete="off" id="goodPeople3" name="goodPeople3" type="text" class=" peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Your thoughts" [value]="journalData && journalData.peopleMadeFeelGood3? journalData.peopleMadeFeelGood3 : ''"/><!-- journalData?.peopleMadeFeelGood3 || '' -->
                         <!-- ========================== -->
                     </p>
                 </div>
@@ -133,8 +133,11 @@
 
 
 
-        <div class="mb-14 flex max-w-sm rounded-xl bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5 shadow-lg">
-            <button [disabled]="journalForm.invalid" [class.disabled]="journalForm.invalid" (click)="addEntry()" class="flex-1 font-bold text-xl bg-white px-6 py-3 rounded-xl text-gray-600">Add Entry</button>
+        <div *ngIf="page==='add'" class="mb-14 flex max-w-sm rounded-xl bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5 shadow-lg transition ease-in-out delay-150 hover:translate-y-1 hover:scale-110 duration-300">
+            <button [disabled]="journalForm.invalid" [class.disabled]="journalForm.invalid" (click)="addEntry()" class=" flex-1 font-bold text-xl bg-white px-6 py-3 rounded-xl text-gray-600">Add Entry</button>
+        </div>
+        <div *ngIf="page==='edit'" class="mb-14 flex max-w-sm rounded-xl bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5 shadow-lg transition ease-in-out delay-150 hover:translate-y-1 hover:scale-110 duration-300">
+            <button [disabled]="journalForm.invalid" [class.disabled]="journalForm.invalid" (click)="editJournal()" class=" flex-1 font-bold text-xl bg-white px-6 py-3 rounded-xl text-gray-600">Edit Journal</button>
         </div>
     </form>
     </section>

@@ -1,0 +1,9 @@
+.disabled{
+    background-image: none;
+    background-color: #ccc;
+    /* color: #666; */
+    /* cursor: not-allowed; */
+    transform: none; /* Disable hover effects */
+    box-shadow: none;
+    
+}

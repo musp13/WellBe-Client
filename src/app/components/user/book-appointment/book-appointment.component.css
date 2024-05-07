@@ -1,0 +1,34 @@
+.disabled{
+    background-color: rgb(197, 197, 197);
+}
+
+.availability-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.availability-section,
+.leave-section {
+    flex-basis: 45%; /* Adjust as needed */
+}
+
+.section-title {
+    font-weight: 550;
+}
+
+.availability-list,
+.leave-list {
+    list-style: none;
+    padding: 0;
+}
+
+.availability-item,
+.leave-item {
+    margin-bottom: 10px;
+}
+
+.time-slot,
+.leave-shift {
+    margin-left: 5px;
+    font-weight: bold;
+}

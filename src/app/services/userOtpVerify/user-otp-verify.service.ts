@@ -9,6 +9,10 @@ import { ApiResponse } from '../../interfaces/apiResponse';
 export class UserOtpVerifyService {
   http = inject(HttpClient);
 
+  setOTP(userId:string){
+    return this.http.post<ApiResponse>(`${apiUrls.usersApi}set_otp/${userId}`, {userId: userId});
+  }
+
   verifyOTP(otpFormData: FormData, userId:string, otp: string){
     console.log(`insidde verify otp service , check userId = ${ userId} `);
     

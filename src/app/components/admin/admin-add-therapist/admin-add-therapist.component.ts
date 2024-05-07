@@ -31,13 +31,13 @@ export class AdminAddTherapistComponent implements OnInit, OnDestroy {
     this.addTherapistForm = this.fb.group({
       fullName: ['', [Validators.required, noWhitespaceValidator(),  Validators.minLength(3)]],
       email: ['', Validators.compose([Validators.required,Validators.email, noWhitespaceValidator()])],
-      userName: ['', [Validators.required, noWhitespaceValidator()]],
+      userName: ['', [Validators.required, noWhitespaceValidator()]]/* ,
       password: ['', [Validators.required, noWhitespaceValidator(), Validators.minLength(8)]],
-      confirmPassword: ['', [Validators.required, noWhitespaceValidator()]]
-    },
+      confirmPassword: ['', [Validators.required, noWhitespaceValidator()]] */
+    }/* ,
     {
       validator: confirmPasswordValidator('password', 'confirmPassword')
-    })
+    } */)
 
     this.therapistFormSubscription = this.addTherapistForm.valueChanges.subscribe(() => {
       this.error = '';

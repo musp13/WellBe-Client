@@ -1,0 +1,30 @@
+.disabled{
+    background-image: none;
+    background-color: #ccc;
+    /* color: #666; */
+    /* cursor: not-allowed; */
+    transform: none; /* Disable hover effects */
+    box-shadow: none;
+    
+}
+
+.marked-leaves {
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.marked-leave {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.leave-date {
+    font-weight: 500;
+}
+
+.no-leaves-message {
+    margin-top: 1rem;
+    font-style: italic;
+}

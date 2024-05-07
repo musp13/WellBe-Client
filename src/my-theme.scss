@@ -1,0 +1,81 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$custom-primary-pallette: (
+    50: #cafffb,
+    100: #abfff9,
+    200: #62fcf1,
+    300: #43ece1,
+    400: #31dace,
+    500: #26ABA3,
+    600: #11968d,
+    700: #127e77,
+    800: #07615b,
+    900: #085550,
+    // ... continues to 900
+ contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    // ... continues to 900
+  )
+);
+
+$custom-accent-palette: (
+    50: #fef5dc,
+    100: #fdeebe,
+    200: #fde39b,
+    300: #fccd73,
+    400: #fbba4d,
+    500: #F7AB1E,
+    600: #e09b1a,
+    700: #c58a16,
+    800: #aa7912,
+    900: #8f680e,
+    A100: #ffffff,
+    A200: #fffaee,
+    A400: #ffd69b,
+    A700: #ffb741,
+    contrast: (
+        50: rgba(black, 0.87),
+        100: rgba(black, 0.87),
+        200: rgba(black, 0.87),
+        300: rgba(black, 0.87),
+        400: rgba(black, 0.87),
+        500: rgba(black, 0.87),
+        600: rgba(black, 0.87),
+        700: rgba(black, 0.87),
+        800: rgba(black, 0.87),
+        900: rgba(black, 0.87),
+        A100: rgba(black, 0.87),
+        A200: rgba(black, 0.87),
+        A400: rgba(black, 0.87),
+        A700: rgba(black, 0.87),
+    )
+);
+
+$my-primary: mat.define-palette($custom-primary-pallette);
+$my-accent: mat.define-palette($custom-accent-pallette);
+
+$my-warn: mat.define-palette(mat.$red-palette);
+
+$my-theme: mat.define-light-theme((
+ color: (
+   primary: $my-primary,
+   accent: $my-accent,
+   warn: $my-warn,
+ ),
+ typography: mat.define-typography-config(),
+ density: 0,
+));
+
+// Emit theme-dependent styles for common features used across multiple components.
+@include mat.core-theme($my-theme);

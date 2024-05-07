@@ -1,0 +1,27 @@
+   <form [formGroup]="availabilityForm">
+    <div class="mt-4" *ngFor="let day of days">
+      <label class="block mb-2 font-bold text-slate-700">{{ day }}</label>
+      <div>
+        <label class="inline-flex items-center mb-2">
+          <input type="checkbox" class="form-checkbox h-5 w-5 text-teal-500 hover:bg-teal-400 mr-1 rounded-md bg-teal-500 border-none focus:ring-white" formControlName="{{ day.trim().toLowerCase()+'Morning' }}"> Morning (9 AM to 1 PM)
+        </label>
+        <!-- <label>afternoon</label> -->
+        <label class="inline-flex items-center mb-2">
+            <input type="checkbox" class="form-checkbox h-5 w-5 text-[#faac7e] hover:bg-[#ffccae] md:ml-5 mr-1 rounded-md bg-[#faac7e] border-none focus:ring-white " formControlName="{{ day.trim().toLowerCase()+'Afternoon' }}"> Afternoon (2 PM to 6 PM)
+          </label>
+      </div>
+      
+      
+    </div>
+    <!-- Error message for no shifts selected -->
+    <!-- <span *ngIf="availabilityForm.get(day.toLowerCase() + 'Morning')?.value === false && availabilityForm.get(day.toLowerCase() + 'Afternoon')?.value === false" class="text-red-500">Please select at least one shift for {{ day }}.</span> -->
+    <div class="mt-4">
+        <span *ngIf="availabilityForm.errors?.['notSelected']"  class="relative text-red-600 mt-5">Please select at least one shift during the week.<br></span>
+    </div>
+    <div><span *ngIf="errorMessage" class="text-red-600">{{errorMessage}}</span></div>
+    <div><span *ngIf="successMessage" class="text-teal-600">{{successMessage}}</span></div>
+    <button (click)="saveAvailability()" [disabled]="availabilityForm.invalid" [class.disabled]="availabilityForm.invalid" class="px-4 py-2 mt-5 bg-gradient-to-r from-teal-500 to-teal-400 text-white font-bold rounded-lg transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg" type="button">Save</button>
+  </form>
+  
+
+  

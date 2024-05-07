@@ -1,3 +1,9 @@
 .width-90{
     width: 90vw;
 }
+
+#view-journals {
+    background-image: url('https://rayoflightthemes.com/wordpress-themes/talking-minds-wordpress-theme/wp-content/uploads/2021/12/Bg_Home_Hero.png');
+    background-size: 100% 100%; /* // Cover the entire container  */
+    background-position: center;
+}

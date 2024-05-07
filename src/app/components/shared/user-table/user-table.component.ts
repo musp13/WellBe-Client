@@ -23,6 +23,8 @@ export class UserTableComponent implements OnInit, OnDestroy {
   userList: Array<User|Therapist> = [];
   displayUsers: Array<User|Therapist> = [];
   searchUser:string = '';
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
   
   getUserListService = inject(GetUserListService);
   getTherapistListService = inject(GetTherapistListService);
@@ -72,7 +74,13 @@ export class UserTableComponent implements OnInit, OnDestroy {
 
   loadView()
   {
-    if(this.searchUser.trim()==='')
+    const startIndex = (this.currentPage-1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.displayUsers = this.userList.filter( user => 
+        user.userName.toLowerCase().includes(this.searchUser.toLowerCase())
+    ).slice(startIndex, endIndex);
+
+    /* if(this.searchUser.trim()==='')
     {
       this.searchUser = '';
       this.displayUsers= this.userList;
@@ -83,12 +91,33 @@ export class UserTableComponent implements OnInit, OnDestroy {
       this.displayUsers = this.userList.filter( user=> 
           user.userName.toLowerCase().includes(this.searchUser.toLowerCase())
         ) as User[]|Therapist[];
-    }
+    } */
+    /* -----------old------ */
     /* this.displayUsers = this.searchUser.trim() === '' ?
       this.userList :
       this.userList.filter(user => user.userName.toLowerCase().includes(this.searchUser.toLowerCase()));
  */
 
+  }
+
+  onPageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
+    this.loadView();
+  }
+
+  getTotalItems(): number {
+    return this.userList.filter(user =>
+        user.userName.toLowerCase().includes(this.searchUser.toLowerCase())
+    ).length;
+  }
+
+  getTotalPages() : number {
+    return Math.ceil(this.getTotalItems() / this.itemsPerPage);
+  }
+
+  getPageNumbers(): number[] {
+    const totalPages = this.getTotalPages();
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
 
   isTherapist(user: User | Therapist): user is Therapist {
