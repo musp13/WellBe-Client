@@ -11,6 +11,13 @@ import { EncryptionService } from '../../../services/encryption/encryption.servi
 import { ToastrService } from 'ngx-toastr';
 import { BookedSlots } from '../../../interfaces/bookedSlots';
 import { TimeSlotOption } from '../../../interfaces/timeSlotOption';
+import { environment } from '../../../../environments/environment';
+import { RazorpayOrder } from '../../../interfaces/razorpayOrder';
+import { WindowRefService } from '../../../services/windowRef/window-ref.service';
+import { RazorpayOptions } from '../../../interfaces/razorpayOptions';
+import Swal from 'sweetalert2';
+
+//declare var Razorpay: any;
 
 @Component({
   selector: 'app-book-appointment',
@@ -22,12 +29,14 @@ export class BookAppointmentComponent implements OnInit, OnDestroy {
   bookAppointmentService = inject(BookAppointmentService);
   encryptionService = inject(EncryptionService);
   toastr = inject(ToastrService);
+  winRef = inject(WindowRefService);
 
   getFormDetailsSubscription !: Subscription;
   getAvailabilitySubscription !: Subscription;
   therapistValueChangeSubscription !: Subscription;
   bookAppointmentSubscription !: Subscription;
   getBookedSlotSubscription !: Subscription;
+  razorpayResponseSubscription !: Subscription;
 
   appointmentForm!: FormGroup;
   message: String = '';
@@ -40,6 +49,8 @@ export class BookAppointmentComponent implements OnInit, OnDestroy {
   maxDate! : Date;
   timeSlotOptions: TimeSlotOption[] = []; ;
   bookedSlots!: BookedSlots;
+  razorpayOrder!: RazorpayOrder;
+  
 
   disabledDates: Date[] = [new Date('2024-04-30'), new Date('2024-05-05')]; // Example disabled dates
 
@@ -236,7 +247,7 @@ export class BookAppointmentComponent implements OnInit, OnDestroy {
         console.log(res.message);
         this.bookedSlots = res.data;
         this.updateTimeSlotOptions();
-        console.log(this.bookedSlots);
+        console.log('bookedSlots:' ,this.bookedSlots);
         
       },
       error: (err)=>{
@@ -313,6 +324,158 @@ export class BookAppointmentComponent implements OnInit, OnDestroy {
     }
   }
 
+  checkSlotAvailable(){
+    const date = this.appointmentForm.get('date')?.value;
+    this.getBookedSlots(date);
+    const slot = parseInt(this.appointmentForm.get('time')?.value);
+    if (this.bookedSlots.userBooked.includes(slot) || this.bookedSlots.therapistBooked.includes(slot)) {
+      return false;
+    }
+    return true;
+  }
+
+  checkTherapistValid(){
+    this.getAppointmentFormDetails();
+    const availableTherapists = this.appointmentFormDetails.therapistList.map(therapist=> therapist._id);
+    if(availableTherapists.includes(this.therapistId)){
+      return true;
+    }else{
+      return false;
+    }
+
+  }
+
+  /* payNow(){
+    if(!this.checkSlotAvailable()){
+      this.toastr.error('Your choosen slot is unavailable. Please choose a different slot');
+      this.updateTimeSlotOptions();
+      return;
+    }
+
+    if(!this.checkTherapistValid()){
+      this.toastr.error('Therapist is currently unavailable. Please choose a different therapist');
+      return;
+    }
+    
+    const razorPayOptions = {
+      description: 'WellBe payment fr appointment booking.',
+      currency: 'INR',
+      amount: this.availabilityDetails.consultationFee? this.availabilityDetails.consultationFee*100 : 1000*100 ,
+      name: 'WellBe',
+      image: 'https://cdn3.iconfinder.com/data/icons/flat-pro-basic-set-2-1/32/green-leaf-512.png',
+      order_id: this.razorpayOrder.orderId,
+      key: environment.RAZORPAY_KEY_ID,
+      prefill: {
+        name: this.appointmentFormDetails.fullName ,
+        email: this.appointmentFormDetails.email,
+        phone: this.appointmentFormDetails.phoneNo ? this.appointmentFormDetails.phoneNo : '' 
+      },
+      theme: {
+        color: '#26ABA3'
+      },
+      modal: {
+        
+        onDismiss: ()=>{
+          console.log('dismissed');
+          
+        }
+      }
+    }
+
+    const successCallBack = (razorpay_response:any)=>{
+      //console.log(paymentId);   
+      console.log('check razorpay response', razorpay_response);
+      
+    }
+
+    const failureCallBack = (err: any)=>{
+      console.log('check razorpay payment error:',err);
+    }
+
+    Razorpay.open(razorPayOptions, successCallBack, failureCallBack);
+  } */
+
+
+  payWithRazor(){
+    const options: RazorpayOptions = {
+      key: environment.RAZORPAY_KEY_ID,
+      amount: this.availabilityDetails.consultationFee? this.availabilityDetails.consultationFee*100 : 1000*100 ,
+      currency: 'INR',
+      name: 'WellBe',
+      description: 'WellBe payment for appointment booking.',
+      image: 'https://cdn3.iconfinder.com/data/icons/flat-pro-basic-set-2-1/32/green-leaf-512.png',
+      order_id: this.razorpayOrder.orderId,
+      modal: {
+        // We should prevent closing of the form when esc key is pressed.
+        escape: false,
+      },
+      notes: {
+        // include notes if any
+      },
+      theme: {
+        color: '#26ABA3'
+      },
+    };
+
+    options.handler = ((response, error)=>{
+      options.response = response;
+      console.log(response);
+      console.log(options);
+      // call your backend api to verify payment signature & capture transaction
+      if(response){
+        this.razorpayResponseSubscription = this.bookAppointmentService.processPayment(response, this.razorpayOrder).subscribe({
+          next: (res)=>{
+            console.log(res.message);
+            
+            this.appointmentForm.reset();
+            this.getAppointmentFormDetails();
+            this.getTherapistValue();
+
+            Swal.fire({
+              title: "Success!",
+              text: "Your Appointment has been Booked!!",
+              icon: "success"
+            });
+              //this.toastr.success('Your Appointment has been Booked!');
+            
+          },
+          error: (err)=>{
+            console.log(err.error.message);
+            Swal.fire({
+              title: "Error!",
+              text: "Failed to process payment.",
+              icon: "error"
+            });
+              //this.toastr.error('Failed to process payment.');
+            
+          }
+        })
+      } 
+      if (error) {
+        console.log(error);
+        this.toastr.error('Failed to process payment.');
+      }
+      
+    });
+
+    if (options.modal) {
+      options.modal.ondismiss = (()=>{
+        // handle the case when user closes the form while transaction is in progress
+        Swal.fire({
+          title: "Error!",
+          text: "Your Appointment booking has been cancelled.",
+          icon: "error"
+        });
+        console.log('Transaction cancelled.');
+      })
+    };
+
+    const rzp = new this.winRef.nativeWindow.Razorpay(options);
+    rzp.open();
+
+    
+  }
+
   bookAppointment() {
     console.log(this.appointmentForm.value);
     
@@ -331,7 +494,11 @@ export class BookAppointmentComponent implements OnInit, OnDestroy {
     this.bookAppointmentSubscription = this.bookAppointmentService.bookAppointment(appointmentObj).subscribe({
       next: (res)=>{
         console.log(res.message);
-        this.toastr.success('Your Appointment has been Booked!');
+        this.razorpayOrder = res.data;
+        console.log('razorpayOrder:', this.razorpayOrder);
+        this.payWithRazor()
+        //this.payNow();
+        //this.toastr.success('Your Appointment has been Booked!');
       },
       error: (err)=>{
         console.log(err.error.message);
@@ -353,6 +520,9 @@ export class BookAppointmentComponent implements OnInit, OnDestroy {
     }
     if (this.getBookedSlotSubscription) {
       this.getBookedSlotSubscription.unsubscribe();
+    }
+    if (this.razorpayResponseSubscription) {
+      this.razorpayResponseSubscription.unsubscribe();
     }
   
   }

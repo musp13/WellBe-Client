@@ -69,6 +69,10 @@ import { AppointmentsListComponent } from './components/shared/appointments-list
 import { TherapistAppointmentListComponent } from './components/therapist/therapist-appointment-list/therapist-appointment-list.component';
 import { AppointmentDetailsComponent } from './components/shared/appointment-details/appointment-details.component';
 import { authenticationErrorHandlingInterceptor } from './interceptors/authenticationErrorHandling/authentication-error-handling.interceptor';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { environment } from '../environments/environment';
+
 /* import { Button1Component } from './components/shared/button1/button1.component'; */
 
 
@@ -132,7 +136,9 @@ import { authenticationErrorHandlingInterceptor } from './interceptors/authentic
     MatFormFieldModule,
     MatDatepickerInput,
     MatInputModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule
   ],
   providers: [
     provideClientHydration(),
@@ -142,7 +148,8 @@ import { authenticationErrorHandlingInterceptor } from './interceptors/authentic
     provideState({name:'therapistLogin', reducer: therapistLoginReducer}),
     provideState({name:'userLogin', reducer: userLoginReducer}),
     provideEffects([AdminLoginEffects, TherapistLoginEffects, UserLoginEffects]),
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    
   ],
   bootstrap: [AppComponent]
 })

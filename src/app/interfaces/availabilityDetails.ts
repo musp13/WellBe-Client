@@ -3,5 +3,6 @@ import { LeaveData } from "./leaveData";
 
 export interface AvailabilityDetails {
     availability : Availability[],
-    leave: LeaveData[]
+    leave: LeaveData[],
+    consultationFee: number
 }

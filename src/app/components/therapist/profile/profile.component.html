@@ -22,17 +22,45 @@
                 </a>  
             </div>
             
+            <!-- edit form starts---------- -->
+            <form [formGroup]="editProfileForm">
             <div class="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4 mt-2">
+                
                 <div class="col-span-4 sm:col-span-3">
+                    
                     <div class="bg-white shadow rounded-lg p-6">
+                        
                         <div class="flex flex-col items-center">
-                            <img src="https://randomuser.me/api/portraits/men/94.jpg" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
-    
+                            <ng-container *ngIf="therapistDetails && therapistDetails.profileImage && therapistDetails.profileImage==='avatar.png'">
+                                <img src="../../../../assets/images/avatar.png" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
+                            </ng-container>
+                            <ng-container *ngIf="therapistDetails && therapistDetails.profileImage && therapistDetails.profileImage!=='avatar.png'">
+                                <img [src]="therapistDetails.profileImage" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
+                            </ng-container>
+                            <!-- <img src="https://randomuser.me/api/portraits/men/94.jpg" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"> -->
+                            <ng-container *ngIf="editMode" class="mb-4 pb-10">                                
+                                <div class="relative">
+                                    <label title="Click to upload" for="button2" class="cursor-pointer flex items-center gap-4 px-6 py-4 before:border-gray-400/60 hover:before:border-gray-300 group before:bg-gray-100 before:absolute before:inset-0 before:rounded-3xl before:border before:border-dashed before:transition-transform before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95">
+                                      <div class="w-max relative">
+                                          <img class="w-12" src="https://www.svgrepo.com/show/485545/upload-cicle.svg" alt="file upload icon" width="512" height="512">
+                                      </div>
+                                      <div class="relative">
+                                          <span class="block text-base font-semibold relative text-blue-900 group-hover:text-[#26ABA3]">
+                                              Change Image
+                                          </span>
+                                          <span class="mt-0.5 block text-sm text-gray-500">Max 2 MB</span>
+                                      </div>
+                                     </label>
+                                    <input hidden="" type="file" name="button2" id="button2" (change)="onImageChange($event)">
+                                </div>
+                                
+                                <!-- <input type="file" name="profileImage" id="profileImage" (change)="onImageChange($event)"> -->
+                                <input formControlName="profileImage" hidden type="text" name="profileImage" id="profileImage">
+                            </ng-container>
                             <!-- </img> -->
 
-                            <!-- edit form starts---------- -->
-                            <form [formGroup]="editProfileForm">
-                                <h1 *ngIf="!editMode" class="text-xl font-bold">{{therapistDetails.fullName}}</h1>
+                            
+                                <h1 *ngIf="!editMode && therapistDetails" class="text-xl font-bold">{{therapistDetails.fullName}}</h1>
                                 <ng-container *ngIf="editMode">
                                     <div class="mb-4">
                                         <label class="block text-gray-700 font-bold mb-2" for="name">
@@ -44,7 +72,7 @@
                                     </div>
                                 </ng-container>
 
-                                <p *ngIf="!editMode" class="text-gray-700">{{therapistDetails.userName}}</p>
+                                <p *ngIf="!editMode && therapistDetails" class="text-gray-700">{{therapistDetails.userName}}</p>
                                 <ng-container *ngIf="editMode && therapistDetails">
                                     <div class="mb-4">
                                         <label class="block text-gray-700 font-bold mb-2" for="userName">
@@ -55,45 +83,234 @@
                                             id="userName" type="text" placeholder="Enter your username" [value]="therapistDetails.userName">
                                     </div>
                                 </ng-container>
-                                <div class="mt-6 flex flex-wrap gap-4 justify-center">
-                                    <!-- <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Contact</a>
-                                    <a href="#" class="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded">Resume</a> -->
-                                    <p *ngIf="therapistDetails.qualifications.length==0" class="text-xs">Please Add Your Qualifications <i class="fa-solid fa-pencil"></i></p>
-                                    <p *ngFor="let qualification of therapistDetails.qualifications">{{qualification}}</p>
-                                </div>
-                            </form>
+                                <ng-container *ngIf="therapistDetails && therapistDetails.qualifications && !editMode">
+                                    <div class="mt-6 flex flex-wrap gap-4 justify-center">
+                                        <!-- <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Contact</a>
+                                        <a href="#" class="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded">Resume</a> -->
+                                        <p *ngIf="therapistDetails.qualifications.length==0" class="text-xs">Please Add Your Qualifications <i class="fa-solid fa-pencil"></i></p>
+                                        <p *ngFor="let qualification of therapistDetails.qualifications">{{qualification.degree}}</p>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="editMode">
+                                    <div class="mb-4 ml-4">
+                                        <label class="block text-gray-700 font-bold mb-2">
+                                            Qualifications
+                                        </label>
+                                        <input formControlName="qualification1"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            id="qualification1" type="text" placeholder="Enter your qualification" 
+                                            [value]="therapistDetails&& therapistDetails.qualifications[0] && therapistDetails.qualifications[0].degree ? therapistDetails.qualifications[0].degree:''">
+                                        <input formControlName="qualification2"
+                                            class=" mt-4 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            id="qualification2" type="text" placeholder="Enter your qualification" 
+                                            [value]="therapistDetails && therapistDetails.qualifications[1] && therapistDetails.qualifications[1].degree ? therapistDetails.qualifications[1].degree:''">
+                                        <input formControlName="qualification3"
+                                            class=" mt-4 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            id="qualification3" type="text" placeholder="Enter your qualification" 
+                                            [value]="therapistDetails && therapistDetails.qualifications[2] && therapistDetails.qualifications[2].degree ? therapistDetails.qualifications[2].degree:''">
+                                    </div>
+                                </ng-container>
+                            
                         </div>
+                        
                         <hr class="my-6 border-t border-gray-300">
                         <div class="flex flex-col">
-                            <span class="text-gray-700 uppercase font-bold tracking-wider mb-2">Specializations</span>
-                            <ul> 
-                                <li *ngIf="!therapistDetails.specializations || therapistDetails.specializations.length === 0"
-                                    class="text-xs">
-                                    Please Add Your Specializations <i class="fa-solid fa-pencil"></i>
-                                </li>
-                                <li *ngFor="let specialization of therapistDetails.specializations" class="mb-2">{{specialization}}</li>
-                                
-                            </ul>
+                            
+                            <ng-container *ngIf="therapistDetails && !editMode">
+                                <span class="text-gray-700 uppercase font-bold tracking-wider mb-2">Specializations</span>
+                                <ul> 
+                                    <li *ngIf="!therapistDetails.specializations || therapistDetails.specializations.length === 0"
+                                        class="text-xs">
+                                        <span *ngIf="!editMode">
+                                            Please Add Your Specializations <i class="fa-solid fa-pencil"></i>
+                                        </span>
+                                    </li>
+                                    <li *ngFor="let specialization of therapistDetails.specializations" class="mb-2">{{specialization}}</li>
+                                    
+                                </ul>
+                            </ng-container>
+                            <ng-container *ngIf="editMode">
+                                <div class="mb-4 ml-4">
+                                    <label class="block text-gray-700 font-bold mb-2">
+                                        Specializations
+                                    </label>
+                                    <input formControlName="specialization1"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="specialization1" type="text" placeholder="Enter your specialization" 
+                                        [value]="therapistDetails && therapistDetails.specializations && therapistDetails.specializations[0]?therapistDetails.specializations[0]:''">
+                                    <input formControlName="specialization2"
+                                        class=" mt-4 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="specialization2" type="text" placeholder="Enter your specialization" 
+                                        [value]="therapistDetails && therapistDetails.specializations && therapistDetails.specializations[1]?therapistDetails.specializations[1]:''">
+                                    <input formControlName="specialization3"
+                                        class=" mt-4 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="specialization3" type="text" placeholder="Enter your specialization" 
+                                        [value]="therapistDetails && therapistDetails.specializations && therapistDetails.specializations[2]?therapistDetails.specializations[2]:''">
+                                </div>
+                            </ng-container>
                         </div>
                     </div>
+                    
                 </div>
+            
                 <div class="col-span-4 sm:col-span-9">
                     <div class="bg-white shadow rounded-lg p-6">
                         <h2 class="text-xl font-bold mb-4">About Me</h2>
-                        <p *ngIf="!therapistDetails.bio" class="text-gray-700 text-xs">Please Add Your Bio <i class="fa-solid fa-pencil"></i>
-                        </p>
-                        <p class="text-gray-700">{{therapistDetails.bio}}
-                        </p>
+                            <ng-container *ngIf="!editMode">
+                                <p *ngIf="therapistDetails && !therapistDetails.bio" class="text-gray-700 text-xs">Please Add Your Bio <i class="fa-solid fa-pencil"></i>
+                                </p>
+                                <p *ngIf="therapistDetails?.bio" class="text-gray-700">{{therapistDetails.bio}}
+                                </p>
+                            </ng-container>
+                            <ng-container *ngIf="editMode">
+                                <textarea formControlName="bio" name="bio" id="" 
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="Add Your Bio here">
+                                {{therapistDetails.bio? therapistDetails.bio : '' }}
+                                </textarea>
+                            </ng-container>
+                        
     
                         <h2 class="text-xl font-bold mt-6 mb-4">Experience</h2>
                         <!-- ------empty message---------- -->
-                        <div *ngIf="!therapistDetails.experiences || therapistDetails.experiences.length === 0" class="mb-6">
-                            <p class="mt-2 text-xs">
-                                Add Your Experience If Any <i class="fa-solid fa-pencil"></i>
-                            </p>
-                        </div>
+                        <ng-container *ngIf="!editMode">
+                            <div *ngIf="therapistDetails && (!therapistDetails.experiences || therapistDetails.experiences.length === 0)" class="mb-6">
+                                <p class="mt-2 text-xs">
+                                    Add Your Experience If Any <i class="fa-solid fa-pencil"></i>
+                                </p>
+                            </div>
+
+                        </ng-container>                      
                         <!-- ------empty message---------- -->
-                        <div class="mb-6">
+                        
+                        <ng-container *ngIf="editMode">
+                            <span class="text-sm text-red-500 ">Experince will be added only if the company name, start date and end date are provided.</span>
+                            <label class="block text-gray-700 font-bold mb-2 mt-2">
+                                Experience 1
+                            </label>
+                            <div class="flex items-center space-x-5 columns-3">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-bold mb-2" for="experienceCompany1">
+                                        Company Name
+                                    </label>
+                                    <input formControlName="experienceCompany1"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="experienceCompany1" type="text" placeholder="Enter your old Company"
+                                        >
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-bold mb-2" for="experienceStartDate1">
+                                        Start Date
+                                    </label>
+                                    <input formControlName="experienceStartDate1"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="experienceStartDate1" type="date" [max]="yesterday" placeholder=""
+                                        >
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-bold mb-2" for="experienceEndDate1">
+                                        End Date
+                                    </label>
+                                    <input formControlName="experienceEndDate1"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="experienceEndDate1" type="date" [max]="yesterday" placeholder=""
+                                        [value]="therapistDetails && therapistDetails.experiences && therapistDetails.experiences[0] && therapistDetails.experiences[0].endDate ?
+                                                 therapistDetails.experiences[0].endDate : ''">
+                                </div>
+                            </div>
+                            <span *ngIf="editProfileForm.hasError('dateRange', 'experienceEndDate1')" class="text-sm text-red-600">End Date Cannot be Before Start Date</span>
+
+                            <!-- experience 2 -->
+                            <label class="block text-gray-700 font-bold mb-2 mt-2">
+                                Experience 2
+                            </label>
+                            <div class="flex items-center space-x-5 columns-3">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-bold mb-2" for="experienceCompany2">
+                                        Company Name
+                                    </label>
+                                    <input formControlName="experienceCompany2"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="experienceCompany2" type="text" placeholder="Enter your old Company"
+                                        [value]="therapistDetails && therapistDetails.experiences && therapistDetails.experiences[1] && therapistDetails.experiences[1].company ?
+                                                 therapistDetails.experiences[1].company : ''">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-bold mb-2" for="experienceStartDate2">
+                                        Start Date
+                                    </label>
+                                    <input formControlName="experienceStartDate2"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="experienceStartDate2" type="date" [max]="yesterday" placeholder=""
+                                        [value]="therapistDetails && therapistDetails.experiences && therapistDetails.experiences[1] && therapistDetails.experiences[1].startDate ?
+                                                 therapistDetails.experiences[1].startDate : ''">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-bold mb-2" for="experienceEndDate2">
+                                        End Date
+                                    </label>
+                                    <input formControlName="experienceEndDate2"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="experienceEndDate2" type="date" [max]="yesterday" placeholder=""
+                                        [value]="therapistDetails && therapistDetails.experiences && therapistDetails.experiences[1] && therapistDetails.experiences[1].endDate ?
+                                                 therapistDetails.experiences[1].endDate : ''">
+                                </div>
+                            </div>
+                            <span *ngIf="editProfileForm.hasError('dateRange', 'experienceEndDate2')" class="text-sm text-red-600">End Date Cannot be Before Start Date</span>
+
+                            <!-- experience 3 -->
+                            <label class="block text-gray-700 font-bold mb-2 mt-2">
+                                Experience 3
+                            </label>
+                            <div class="flex items-center space-x-5 columns-3">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-bold mb-2" for="experienceCompany3">
+                                        Company Name
+                                    </label>
+                                    <input formControlName="experienceCompany3"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="experienceCompany3" type="text" placeholder="Enter your old Company"
+                                        [value]="therapistDetails && therapistDetails.experiences && therapistDetails.experiences[2] && therapistDetails.experiences[2].company ?
+                                                 therapistDetails.experiences[2].company : ''">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-bold mb-2" for="experienceStartDate3">
+                                        Start Date
+                                    </label>
+                                    <input formControlName="experienceStartDate3"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="experienceStartDate3" type="date" [max]="yesterday" placeholder=""
+                                        [value]="therapistDetails && therapistDetails.experiences && therapistDetails.experiences[2] && therapistDetails.experiences[2].startDate ?
+                                                 therapistDetails.experiences[2].startDate : ''">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-bold mb-2" for="experienceEndDate3">
+                                        End Date
+                                    </label>
+                                    <input formControlName="experienceEndDate3"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="experienceEndDate3" type="date" [max]="yesterday" placeholder=""
+                                        [value]="therapistDetails && therapistDetails.experiences && therapistDetails.experiences[1] && therapistDetails.experiences[1].endDate ?
+                                                 therapistDetails.experiences[1].endDate : ''">
+                                </div>
+                            </div>
+                            <span *ngIf="editProfileForm.hasError('dateRange', 'experienceEndDate3')" class="text-sm text-red-600">End Date Cannot be Before Start Date</span>
+
+                        </ng-container>   
+                        <ng-container *ngIf="!editMode && therapistDetails && therapistDetails.experiences">
+                            <div *ngFor="let  experience of therapistDetails.experiences" class="mb-6">
+                                <div class="flex justify-between flex-wrap gap-2 w-full">
+                                    <span class="text-gray-700 font-bold">At {{experience.company}}</span>
+                                    <p>
+                                        <!-- <span class="text-gray-700 mr-2">at ABC Company</span> -->
+                                        <span class="text-gray-700"> During {{experience.startDate | date:'mediumDate'}} - {{experience.endDate | date:'mediumDate'}}</span>
+                                    </p>
+                                </div>
+                                
+                            </div>
+                        </ng-container>
+                        <!-- ---------sample display------------ -->
+                        <!-- <div class="mb-6">
                             <div class="flex justify-between flex-wrap gap-2 w-full">
                                 <span class="text-gray-700 font-bold">Clinical Psychologist</span>
                                 <p>
@@ -106,10 +323,25 @@
                                 tortor ullamcorper, ut vestibulum velit convallis. Aenean posuere risus non velit egestas
                                 suscipit.
                             </p>
-                        </div>
+                        </div> -->
+
+                        <!-- yearsOf experience------- -->
+                        <h2 class="text-xl font-bold mb-4 mt-4">Consultaion Fee</h2>
+                        <ng-container *ngIf="!editMode">
+                            <p *ngIf="therapistDetails && !therapistDetails.consultationFee" class="text-gray-700 text-xs">Please Add Consultaion fee <i class="fa-solid fa-pencil"></i>
+                            </p>
+                            <p *ngIf="therapistDetails?.consultationFee" class="text-gray-700">{{therapistDetails.consultationFee? therapistDetails.consultationFee: 'Please Add your consultation Fee' }}<span class="ml-2">Per Hour</span>
+                            </p>
+                        </ng-container>
+                        <ng-container *ngIf="editMode">
+                            <input formControlName="consultationFee" name="consultationFee" type="text" id="" 
+                            class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            [value]="therapistDetails.consultationFee ? therapistDetails.consultationFee: '' "><span class="ml-2">Per Hour</span>
+                           
+                        </ng-container>
 
                         <!-- --------Availability------------- -->
-                        <h2 class="text-xl font-bold mb-4">Availability</h2>
+                        <h2 class="text-xl font-bold mb-4 mt-10">Availability</h2>
                         <app-availability-form></app-availability-form>
                         <!-- ------------------------- -->
 
@@ -120,6 +352,7 @@
                     </div>
                 </div>
             </div>
+        </form>
         </div>
     </div>
 <!-- </section> -->
