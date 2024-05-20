@@ -1,6 +1,7 @@
 export const environment = {
     production: true,
     API_BASE_URL : 'http://localhost:8000/api/',
+    SOCKET_IO_URL: 'http://localhost:8000/',
     firebaseConfig : {
         apiKey: "AIzaSyDeF_qSaaoBeaSJNtzC53DyGjLjyHit6To",
         authDomain: "wellbe-15511.firebaseapp.com",

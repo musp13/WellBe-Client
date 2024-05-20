@@ -72,6 +72,11 @@ import { authenticationErrorHandlingInterceptor } from './interceptors/authentic
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from '../environments/environment';
+import { ChatComponent } from './components/admin/chat/chat.component';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: environment.SOCKET_IO_URL , options: {} };
+
 
 /* import { Button1Component } from './components/shared/button1/button1.component'; */
 
@@ -113,7 +118,8 @@ import { environment } from '../environments/environment';
     MarkLeaveComponent,
     AppointmentsListComponent,
     TherapistAppointmentListComponent,
-    AppointmentDetailsComponent
+    AppointmentDetailsComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -138,7 +144,8 @@ import { environment } from '../environments/environment';
     MatInputModule,
     MatNativeDateModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     provideClientHydration(),

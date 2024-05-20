@@ -29,6 +29,7 @@ import { BookAppointmentComponent } from './components/user/book-appointment/boo
 import { AppointmentsListComponent } from './components/shared/appointments-list/appointments-list.component';
 import { TherapistAppointmentListComponent } from './components/therapist/therapist-appointment-list/therapist-appointment-list.component';
 import { AppointmentDetailsComponent } from './components/shared/appointment-details/appointment-details.component';
+import { ChatComponent } from './components/admin/chat/chat.component';
 
 const routes: Routes = [
   {path:'admin',component: AdminLayoutComponent,
@@ -38,6 +39,7 @@ const routes: Routes = [
       {path: 'add_therapist', component: AdminAddTherapistComponent, canActivate: [adminLoggedInGuard]},
       {path: 'user_list', component: UserListComponent, canActivate: [adminLoggedInGuard]},
       {path: 'therapist_list', component: TherapistListComponent, canActivate: [adminLoggedInGuard]},
+      {path: 'chat', component: ChatComponent, canActivate: [adminLoggedInGuard]},
       {path: '', redirectTo: '/admin/login', pathMatch: 'full'},
     ]
   },
