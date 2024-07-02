@@ -106,17 +106,20 @@
                     Time (1 Hour)
                 </label>
                 <select formControlName="time"
-                        class="shadow cursor-pointer appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="shadow cursor-pointer appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none 
+                        focus:shadow-outline"
                         id="time">
                     <option value="" disabled selected>Select a time</option> 
                     <!-- <option *ngFor="let option of timeSlotOptions" [value]="option.value">{{option.label}}</option> -->
                     <ng-container *ngFor="let option of timeSlotOptions">
-                        <option [value]="option.value" [disabled]="option.disabled">{{option.label}} <span *ngIf="option.disabled" class="text-sm text-red-600"> &nbsp;({{option.bookingStatus}})</span></option>
+                        <option [value]="option.value" [disabled]="option.disabled">{{option.label}} <span *ngIf="option.disabled" 
+                            class="text-sm text-red-600"> &nbsp;({{option.bookingStatus}})</span></option>
                         
                     </ng-container>
                 </select>
                 <span *ngIf="appointmentForm.get('time')?.disabled" class="text-sm text-red-600">* Please Choose a Date To Enable Time</span>
-                <span *ngIf="!appointmentForm.get('time')?.disabled && appointmentForm.hasError('required','time')" class="text-sm text-red-600">* Please Choose a Time for the Appointment</span>
+                <span *ngIf="!appointmentForm.get('time')?.disabled && appointmentForm.hasError('required','time')" class="text-sm text-red-600">
+                    * Please Choose a Time for the Appointment</span>
             </div>
             
             

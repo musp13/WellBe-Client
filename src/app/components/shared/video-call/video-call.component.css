@@ -1,0 +1,12 @@
+.video-call-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  video {
+    width: 48%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  

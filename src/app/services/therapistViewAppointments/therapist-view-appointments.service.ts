@@ -22,4 +22,9 @@ export class TherapistViewAppointmentsService {
   getCancelledAppointments(){
     return this.http.get<ApiResponse>(`${apiUrls.therapistsApi}get_cancelled_appointments`);
   }
+
+  saveRoomId(appointmentId: string, roomId: string){
+    return this.http.patch<ApiResponse>(`${apiUrls.therapistsApi}save_room_id`, {appointmentId, roomId});
+  }
+
 }

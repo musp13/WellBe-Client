@@ -26,7 +26,17 @@
         </div>
         <p class="text-gray-500">{{ appointment.date | date }}</p>
       </div>
-      <p class="text-gray-700">{{ getFormattedTime(appointment.slotNumber) }}</p>
+      <div class="flex justify-between">
+        <p class="text-gray-700">{{ getFormattedTime(appointment.slotNumber) }}</p>
+        <!-- ---------video call room id-------------- -->
+        <div class="flex flex-col">
+          <!-- <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-36 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-300 hover:focus:border-orange-300 selection:focus:border-orange-300" [(ngModel)]="appointment.roomId" id="roomId" type="text" placeholder="Enter Room ID"> -->
+          <button (click)="startSession(appointment)" class="bg-[#FEF3DE] shadow  hover:bg-[#ffe6b8] focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded" type="button" ><!-- F7AB1E -->
+            Start Session
+          </button>
+        </div>
+        <!-- ---------video call room id-------------- -->
+      </div>
       <p class="text-gray-700">Participants: {{ appointment.participants }}</p>
       <p [routerLink]="['/therapist/appointment_details', appointment['appointmentId'],'therapist']" class="mt-2 text-orange-500 text-xs cursor-pointer">Show Details...<i class="fa-solid fa-angles-right"></i></p>
       <div class="flex justify-end mt-4">

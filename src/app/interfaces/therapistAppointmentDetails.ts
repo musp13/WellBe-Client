@@ -7,5 +7,6 @@ export interface TherapistAppointmentDetails {
     participants: number,
     appointmentNumber: number,
     date: Date,
-    message: string
+    message: string,
+    roomId?: string;
 }

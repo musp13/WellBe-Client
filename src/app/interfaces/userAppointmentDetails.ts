@@ -7,5 +7,6 @@ export interface UserAppointmentDetails {
     participants: number,
     appointmentNumber: number,
     date: Date,
-    message: string
+    message: string,
+    therapistPeerId?: string|null
 }

@@ -33,6 +33,26 @@
             <div class="uppercase tracking-wide text-lg text-[#AE9FB1] font-semibold ml-10">{{appointment.therapistName}}</div>
             <p class="mt-2 text-gray-500">{{getFormattedTime(appointment.slotNumber)}}</p>
             <p class="mt-2 text-gray-500">My Contact No: (+91) {{appointment.myContactNumber}}</p>
+            <p></p>
+
+            <!-- Display therapistPeerId if available -->
+            
+            <div *ngIf="appointment.therapistPeerId" class=" mt-2">
+              Therapist Peer ID:
+              <div class="flex align-middle text-gray-500 border-2 border-orange-200 rounded-sm">
+                <p class="mt-2">{{appointment.therapistPeerId}}</p>
+                <button (click)="copyToClipboard(appointment.therapistPeerId)"  title="Copy To Clipboard" class="border-orange shadow  hover:bg-[#ffe6b8] focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded">
+                  <i class="fa-regular fa-copy"></i>
+                </button>
+              </div>
+            </div>
+            <!-- ---------video call join button-------------- -->
+            <div class="flex flex-col">
+              <button (click)="joinSession()" class="bg-[#FEF3DE] shadow  hover:bg-[#ffe6b8] focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded" type="button" ><!-- F7AB1E -->
+                Join Session
+              </button>
+            </div>
+            <!-- ---------video call join button-------------- -->
             <p [routerLink]="['/user/appointment_details', appointment['appointmentId'],'user']" class="mt-2 text-orange-500 text-xs cursor-pointer">Show Details...<i class="fa-solid fa-angles-right"></i></p>
             
             <!-- <button class="mt-5 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">

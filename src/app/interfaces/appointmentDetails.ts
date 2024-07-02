@@ -10,5 +10,6 @@ export interface AppointmentDetails{
     date: Date,
     message: string,
     duration: number,
-    notes: string
+    notes: string,
+    roomId?: string;
 }

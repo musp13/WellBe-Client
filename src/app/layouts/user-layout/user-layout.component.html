@@ -2,5 +2,8 @@
 <div class="mt-20">
     <router-outlet></router-outlet>
 </div>
+<ng-container *ngIf="isLoggedIn">
+    <app-user-chat></app-user-chat>
+</ng-container>
 
 <app-footer></app-footer>

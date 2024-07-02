@@ -3,6 +3,8 @@ import { UserViewAppointmentsService } from '../../../services/userViewAppointme
 import { Subscription } from 'rxjs';
 import { UserAppointmentDetails } from '../../../interfaces/userAppointmentDetails';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-appointments-list',
@@ -11,6 +13,8 @@ import Swal from 'sweetalert2';
 })
 export class AppointmentsListComponent implements OnInit, OnDestroy {
   userViewAppointmentsService = inject(UserViewAppointmentsService);
+  router = inject(Router);
+  toastr = inject(ToastrService);
 
   getAppointmentListSubscription!: Subscription;
   cancelAppointmentSubscription!: Subscription;
@@ -104,6 +108,10 @@ export class AppointmentsListComponent implements OnInit, OnDestroy {
     }
   }
 
+  joinSession(){
+    this.router.navigate(['/user/join_video_call']);
+  }
+
   cancelAppointment(appointmentId: string){
     Swal.fire({
       title: "Are you sure?",
@@ -146,5 +154,14 @@ export class AppointmentsListComponent implements OnInit, OnDestroy {
         console.log(err.error.message);
       }
     })
+  }
+
+  copyToClipboard(text: string){
+    navigator.clipboard.writeText(text).then(()=>{
+      console.log('Text copied to clipboard');
+      this.toastr.success('Text copied to clipboard');
+    }).catch(err => {
+      console.error('Failed to copy text: ', err);
+    });
   }
 }

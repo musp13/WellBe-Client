@@ -17,8 +17,10 @@ const initialState : UserLoginState = {
 
 export const userLoginReducer = createReducer( initialState, 
                                                     on(userLogin, (state : UserLoginState)=> ({ ...state, isLoading: true })),
-                                                    on(userLoginSuccess, (state: UserLoginState, {user})=> ({...state, user, isLoading: false})),
-                                                    on(userLoginFailure, (state, {error})=> ({...state, error, isLoading: false}) ),
+                                                    on(userLoginSuccess, (state: UserLoginState, {user})=> ({...state, user,
+                                                         isLoading: false})),
+                                                    on(userLoginFailure, (state, {error})=> ({...state, error,
+                                                         isLoading: false}) ),
                                                     
                                                     on(userLogout, ()=>initialState),
                                                     on(userLogoutSuccess, ()=> initialState),

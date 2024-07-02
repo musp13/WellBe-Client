@@ -61,6 +61,9 @@ import { AvailabilityFormComponent } from './components/therapist/availability-f
 import { MarkLeaveComponent } from './components/therapist/mark-leave/mark-leave.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatDatepickerInput, MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -74,6 +77,12 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from '../environments/environment';
 import { ChatComponent } from './components/admin/chat/chat.component';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { UserChatComponent } from './components/user/user-chat/user-chat.component';
+import { VideoCallComponent } from './components/shared/video-call/video-call.component';
+import { VideoRoomComponent } from './components/shared/video-room/video-room.component';
+import { WebrtcVideoCallComponent } from './components/shared/webrtc-video-call/webrtc-video-call.component';
+import { WebrtcVideoCallinfoDialogComponent } from './components/shared/webrtc-video-callinfo-dialog/webrtc-video-callinfo-dialog.component';
+import { VideoCallTravComponent } from './components/shared/video-call-trav/video-call-trav.component';
 
 const config: SocketIoConfig = { url: environment.SOCKET_IO_URL , options: {} };
 
@@ -119,7 +128,13 @@ const config: SocketIoConfig = { url: environment.SOCKET_IO_URL , options: {} };
     AppointmentsListComponent,
     TherapistAppointmentListComponent,
     AppointmentDetailsComponent,
-    ChatComponent
+    ChatComponent,
+    UserChatComponent,
+    VideoCallComponent,
+    VideoRoomComponent,
+    WebrtcVideoCallComponent,
+    WebrtcVideoCallinfoDialogComponent,
+    VideoCallTravComponent
   ],
   imports: [
     BrowserModule,
@@ -137,11 +152,14 @@ const config: SocketIoConfig = { url: environment.SOCKET_IO_URL , options: {} };
     ToastNotificationConfigModule.forRoot(), // Needed for instantiating toast notifications.
     DatePipe,
     MatButtonModule,
+    MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    MatSnackBarModule,
     MatDatepickerInput,
     MatInputModule,
+    ClipboardModule,
     MatNativeDateModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,

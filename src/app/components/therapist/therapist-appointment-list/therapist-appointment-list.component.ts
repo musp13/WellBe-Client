@@ -3,6 +3,8 @@ import { TherapistViewAppointmentsService } from '../../../services/therapistVie
 import { Subscription } from 'rxjs';
 import { TherapistAppointmentDetails } from '../../../interfaces/therapistAppointmentDetails';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { EncryptionService } from '../../../services/encryption/encryption.service';
 
 @Component({
   selector: 'app-therapist-appointment-list',
@@ -11,10 +13,13 @@ import Swal from 'sweetalert2';
 })
 export class TherapistAppointmentListComponent implements OnInit, OnDestroy {
   therapistViewAppointmentsService = inject(TherapistViewAppointmentsService);
+  encryptionService = inject(EncryptionService);
+  router = inject(Router);
 
   getAppointmentListSubscription !: Subscription;
   cancelAppointmentSubscription !: Subscription;
   getCancelledAppointmentsSubscription!: Subscription;
+  saveRoomIdSubscription!: Subscription;
 
   appointmentList !: TherapistAppointmentDetails[];
   displayList!:TherapistAppointmentDetails[];
@@ -22,8 +27,10 @@ export class TherapistAppointmentListComponent implements OnInit, OnDestroy {
   itemsPerPage=3;
   currentPage=1;
   totalPages=0;
+  therapistId='';
 
   ngOnInit(): void {
+    this.getTherapistId();
     this.getAppointmentList();
     this.getCancelledAppointments();
   }
@@ -37,6 +44,16 @@ export class TherapistAppointmentListComponent implements OnInit, OnDestroy {
     }
     if (this.getCancelledAppointmentsSubscription) {
       this.getCancelledAppointmentsSubscription.unsubscribe();
+    }
+    if (this.saveRoomIdSubscription) {
+      this.saveRoomIdSubscription.unsubscribe();
+    }
+  }
+
+  getTherapistId(){
+    const encryptedId = localStorage.getItem('therapistId');
+    if(encryptedId){
+      this.therapistId = this.encryptionService.decrypt(encryptedId);
     }
   }
 
@@ -142,5 +159,29 @@ export class TherapistAppointmentListComponent implements OnInit, OnDestroy {
         console.log(err.error.message);
       }
     })
+  }
+
+  startSession(appointment: TherapistAppointmentDetails){
+    const appointmentId = appointment.appointmentId;
+    this.router.navigate(['/therapist/webrtc_video_call', appointmentId]);
+  }
+
+  saveRoomId(appointment: TherapistAppointmentDetails){
+    const appointmentId = appointment.appointmentId;
+    const roomId = appointment.roomId;
+
+    if (roomId && this.therapistId) {
+      this.saveRoomIdSubscription = this.therapistViewAppointmentsService.saveRoomId(appointmentId, roomId).subscribe({
+        next: (res)=>{
+          this.router.navigate(['/therapist/video_room', roomId, this.therapistId, 'therapist']);//
+          //alert('navigation ends');
+        },
+        error: (err)=>{
+          console.log(err.error.message);
+          Swal.fire('Error',err.error.message, 'error');
+        }
+      })
+    }
+    
   }
 }

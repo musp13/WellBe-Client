@@ -30,6 +30,10 @@ import { AppointmentsListComponent } from './components/shared/appointments-list
 import { TherapistAppointmentListComponent } from './components/therapist/therapist-appointment-list/therapist-appointment-list.component';
 import { AppointmentDetailsComponent } from './components/shared/appointment-details/appointment-details.component';
 import { ChatComponent } from './components/admin/chat/chat.component';
+import { VideoCallComponent } from './components/shared/video-call/video-call.component';
+import { VideoRoomComponent } from './components/shared/video-room/video-room.component';
+import { WebrtcVideoCallComponent } from './components/shared/webrtc-video-call/webrtc-video-call.component';
+import { VideoCallTravComponent } from './components/shared/video-call-trav/video-call-trav.component';
 
 const routes: Routes = [
   {path:'admin',component: AdminLayoutComponent,
@@ -53,6 +57,10 @@ const routes: Routes = [
       {path: 'profile', component: ProfileComponent,  canActivate: [therapistLoggedInGuard]},
       {path: 'appointment_list', component: TherapistAppointmentListComponent,  canActivate: [therapistLoggedInGuard]},
       {path: 'appointment_details/:appointmentId/:userType', component: AppointmentDetailsComponent, canActivate: [therapistLoggedInGuard]},
+      {path: 'video_call/:roomId', component: VideoCallComponent, canActivate: [therapistLoggedInGuard]},
+      {path: 'video_room/:roomId/:userId/:userType', component: VideoRoomComponent, canActivate: [therapistLoggedInGuard]},
+      {path: 'webrtc_video_call/:appointmentId', component: WebrtcVideoCallComponent, canActivate: [therapistLoggedInGuard]},
+      {path: 'video_call_trav', component: VideoCallTravComponent, canActivate: [therapistLoggedInGuard]},
       {path: '', redirectTo: '/therapist/login', pathMatch: 'full'},
     ]
   },
@@ -67,6 +75,7 @@ const routes: Routes = [
       {path: 'book_appointment', component: BookAppointmentComponent, canActivate: [userLoggedInGuard]},
       {path: 'appointment_list', component: AppointmentsListComponent, canActivate: [userLoggedInGuard]},
       {path: 'appointment_details/:appointmentId/:userType', component: AppointmentDetailsComponent, canActivate: [userLoggedInGuard]},
+      {path: 'join_video_call', component: WebrtcVideoCallComponent, canActivate: [userLoggedInGuard]},
       {path: '', redirectTo: '/user/login', pathMatch: 'full'},
     ]
   },
