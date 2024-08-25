@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
 import { UserOtpVerifyService } from '../../../services/userOtpVerify/user-otp-verify.service';
 import { Subscription, interval } from 'rxjs';
@@ -36,6 +36,7 @@ export class OtpVerificationComponent implements OnInit, AfterViewInit, OnDestro
   therapistOtpVerifyService = inject(TherapistOtpVerifyService);
   activatedRoute = inject(ActivatedRoute);
   toastr = inject(ToastrService);
+  changeDetectorRef = inject(ChangeDetectorRef)
 
   otpVerificationSubscription! : Subscription;
   activatedRouteSubscription! : Subscription;
@@ -56,18 +57,21 @@ export class OtpVerificationComponent implements OnInit, AfterViewInit, OnDestro
       console.log(`check userId from params = ${this.userId}`);
     });
 
-    this.setOTP();
+    //this.setOTP();
     //this.remainingTime = 0;
     //this.startTimer();
   }
 
   ngAfterViewInit(): void {
     //this.startTimer();
+    this.changeDetectorRef.detectChanges();
+    this.setOTP();
   }
 
   setOTP(){
     //console.log('hello, ngoninit', this.userType, this.userId);
 
+    
     if(this.userType==='therapist'){
       this.setOtpSubscription = this.therapistOtpVerifyService.setOTP(this.userId).subscribe({
         next: (res)=>{

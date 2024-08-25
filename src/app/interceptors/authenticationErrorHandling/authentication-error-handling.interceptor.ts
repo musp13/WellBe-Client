@@ -16,8 +16,6 @@ export const authenticationErrorHandlingInterceptor: HttpInterceptorFn = (req: H
     userType='therapist';
   }
   
-  
-  
   return next(req).pipe(
     catchError( (err: HttpErrorResponse)=> {
       //console.log('inside catcError:', err.status);

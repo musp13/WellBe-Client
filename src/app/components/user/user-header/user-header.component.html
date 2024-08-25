@@ -1,9 +1,11 @@
-<nav class="bg-white border-gray-200 dark:bg-gray-900 fixed w-full z-20 top-0 start-0 end-0 dark:border-gray-700 shadow-lg shadow-[#26aba215]">
+<nav class="bg-white h-20 border-gray-200 dark:bg-gray-900 fixed w-full z-20 top-0 start-0 end-0 dark:border-gray-700 shadow-lg shadow-[#26aba215]">
     <div class="flex flex-wrap items-center justify-between mx-5 mt-2 p-4">
       <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
         <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-[#26ABA3]"><app-logo></app-logo></span>
     </a>
   <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+      <button *ngIf="isLoggedIn" type="button" [routerLink]="['/user/user_profile']"
+        class="sm:mr-2 md:mr-4 text-3xl text-[#F7AB1E] hover:text-[#F1531D] "><i class="fa-solid fa-circle-user"></i></button>
       <button (click)="onUserLogout()" *ngIf="isLoggedIn" type="button" class="text-white bg-[#26ABA3] hover:bg-[#F7AB1E] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-3xl text-sm px-4 py-2 text-center">Logout</button>
       <button *ngIf="isLocalStorageLoaded && !isLoggedIn"  [routerLink]="['/user/login']" type="button" class="text-white bg-[#26ABA3] hover:bg-[#F7AB1E] focus:outline-none font-medium text-sm px-4 py-2 text-center rounded-tl-lg">Login</button>
       <button *ngIf="isLocalStorageLoaded && !isLoggedIn" [routerLink]="['/user/signup']" type="button" class="text-[#26ABA3] bg-transparent border-2 border-[#26ABA3] hover:border-[#F7AB1E] hover:text-[#F7AB1E] focus:outline-none font-medium text-sm px-4 py-2 text-center rounded-br-lg">Signup</button>
@@ -31,6 +33,9 @@
       </li> -->
       <li>
         <a  routerLink="/user/appointment_list" routerLinkActive="active-link" class="block py-2 px-3 rounded md:p-0 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#26ABA3]">Appointments</a>
+      </li>
+      <li>
+        <a  routerLink="/user/view_therapists" routerLinkActive="active-link" class="block py-2 px-3 rounded md:p-0 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#26ABA3]">Our Therapists</a>
       </li>
     </ul>
   </div>

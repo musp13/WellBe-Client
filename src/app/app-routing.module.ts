@@ -34,6 +34,8 @@ import { VideoCallComponent } from './components/shared/video-call/video-call.co
 import { VideoRoomComponent } from './components/shared/video-room/video-room.component';
 import { WebrtcVideoCallComponent } from './components/shared/webrtc-video-call/webrtc-video-call.component';
 import { VideoCallTravComponent } from './components/shared/video-call-trav/video-call-trav.component';
+import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { ViewTherapistsComponent } from './components/user/view-therapists/view-therapists.component';
 
 const routes: Routes = [
   {path:'admin',component: AdminLayoutComponent,
@@ -76,6 +78,8 @@ const routes: Routes = [
       {path: 'appointment_list', component: AppointmentsListComponent, canActivate: [userLoggedInGuard]},
       {path: 'appointment_details/:appointmentId/:userType', component: AppointmentDetailsComponent, canActivate: [userLoggedInGuard]},
       {path: 'join_video_call', component: WebrtcVideoCallComponent, canActivate: [userLoggedInGuard]},
+      {path: 'user_profile', component: UserProfileComponent, canActivate: [userLoggedInGuard]},
+      {path: 'view_therapists', component: ViewTherapistsComponent, canActivate: [userLoggedInGuard]},
       {path: '', redirectTo: '/user/login', pathMatch: 'full'},
     ]
   },

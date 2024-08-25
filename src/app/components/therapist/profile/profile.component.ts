@@ -29,7 +29,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   endTime = '';
   yesterday!: string ;
 
+  defaultProfileImageSrc = '../../../../assets/images/avatar.png';
+  profileImageSrc='';
+
   ngOnInit(): void {
+    this.profileImageSrc = this.defaultProfileImageSrc;
     const today = new Date();
     const yesterday = new Date(today.setDate(today.getDate() - 1));
     this.yesterday = yesterday.toISOString().split('T')[0];
@@ -45,7 +49,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
       this.getDetailsSubscription = this.getTherapistDetails.getDetails(this.therapistId).subscribe({
         next: (res)=>{
-          this.therapistDetails = res.data.therapistDetails
+          this.therapistDetails = res.data.therapistDetails;
+          if (this.therapistDetails.profileImage!=='avatar.png') {
+            this.profileImageSrc = this.therapistDetails.profileImage;
+          }
           this.patchFormValues();
           //alert(res.message);
           console.log(this.therapistDetails);
@@ -150,7 +157,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       const path = `yt/${file.name}`;
       const uploadTask = await this.fireStorage.upload(path, file);
       const url = await uploadTask.ref.getDownloadURL();
-      console.log(url);
+      console.log('lets check the uploaded image url: ',url);
+      this.profileImageSrc = url;
       this.editProfileForm.get('profileImage')?.patchValue(url);
     }
   }

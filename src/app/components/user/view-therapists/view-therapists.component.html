@@ -1,0 +1,70 @@
+    <!-- source https://github.com/spacemadev/elevate-free-tailwind-business-template/ -->
+<section id="our-team" class="bg-[#E7E5C1] py-12 min-h-96"> <!-- E7E5C1 -->
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-14 mt-7 text-primary">Meet Our Therapists</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"> <!--    flex flex-wrap gap-6 justify-center -->
+            <!-- Team Member 1 -->
+            <div *ngFor="let therapist of therapistList" class="bg-white rounded-lg shadow-md p-6 max-w-xs text-center"> <!--  my-6 -->
+                <img [src]="therapist.profileImage" height="5px" alt="{{therapist.fullName}}" class="w-24 h-24 rounded-full mx-auto object-cover"> <!-- w-full rounded-full mb-4 -->
+                <div class="thrapist-details">
+                    <h3 class="text-xl font-semibold mb-2 mt-2">{{ therapist.fullName }}</h3>
+                </div>
+                <!-- <h3 class="text-xl font-semibold mb-2">John Doe</h3> -->
+                <p class="text-gray-700">{{therapist.specializations[0]}} <br>
+                   {{therapist.specializations[1]}} <br>
+                    {{therapist.specializations[2]}} </p>
+            </div>
+
+            <!-- Team Member 2 -->
+            <!-- <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+                <img src="https://spacema-dev.com/elevate/assets/images/team/4.jpg" alt="Team Member 2" class="w-full rounded-full mb-4">
+                <h3 class="text-xl font-semibold mb-2">Jane Smith</h3>
+                <p class="text-gray-700">Role: Graphic Designer</p>
+            </div> -->
+
+            <!-- Team Member 3 -->
+            <!-- <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+                <img src="https://spacema-dev.com/elevate/assets/images/team/3.jpg" alt="Team Member 3" class="w-full rounded-full mb-4">
+                <h3 class="text-xl font-semibold mb-2">Alex Johnson</h3>
+                <p class="text-gray-700">Role: Marketing Manager</p>
+            </div> -->
+
+            <!-- Team Member 4 -->
+            <!-- <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+                <img src="https://spacema-dev.com/elevate/assets/images/team/2.jpg" alt="Team Member 4" class="w-full rounded-full mb-4">
+                <h3 class="text-xl font-semibold mb-2">Peter Johnson</h3>
+                <p class="text-gray-700">Role: Seo specialist</p>
+            </div> -->
+
+            <!-- Team Member 5 -->
+            <!-- <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+                <img src="https://spacema-dev.com/elevate/assets/images/team/5.jpg" alt="Team Member 5" class="w-full rounded-full mb-4">
+                <h3 class="text-xl font-semibold mb-2">Emily Brown</h3>
+                <p class="text-gray-700">Role: UX Designer</p>
+            </div> -->
+
+            <!-- Team Member 6 -->
+            <!-- <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+                <img src="https://spacema-dev.com/elevate/assets/images/team/6.jpg" alt="Team Member 6" class="w-full rounded-full mb-4">
+                <h3 class="text-xl font-semibold mb-2">Michael Davis</h3>
+                <p class="text-gray-700">Role: Frontend Developer</p>
+            </div> -->
+
+            <!-- Team Member 7 -->
+            <!-- <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+                <img src="https://spacema-dev.com/elevate/assets/images/team/7.jpg" alt="Team Member 7" class="w-full rounded-full mb-4">
+                <h3 class="text-xl font-semibold mb-2">Sarah Johnson</h3>
+                <p class="text-gray-700">Role: Content Writer</p>
+            </div> -->
+
+            <!-- Team Member 8 -->
+            <!-- <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+                <img src="https://spacema-dev.com/elevate/assets/images/team/8.jpg" alt="Team Member 8" class="w-full rounded-full mb-4">
+                <h3 class="text-xl font-semibold mb-2">David Wilson</h3>
+                <p class="text-gray-700">Role: Project Manager</p>
+            </div> -->
+        </div>
+    </div>
+</section>
+

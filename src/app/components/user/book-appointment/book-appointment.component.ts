@@ -51,7 +51,6 @@ export class BookAppointmentComponent implements OnInit, OnDestroy {
   bookedSlots!: BookedSlots;
   razorpayOrder!: RazorpayOrder;
   
-
   disabledDates: Date[] = [new Date('2024-04-30'), new Date('2024-05-05')]; // Example disabled dates
 
   ngOnInit(): void {

@@ -64,7 +64,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatDatepickerInput, MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDatepickerInput, MatDatepickerModule} from '@angular/material/datepicker';                                                   
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -83,6 +83,8 @@ import { VideoRoomComponent } from './components/shared/video-room/video-room.co
 import { WebrtcVideoCallComponent } from './components/shared/webrtc-video-call/webrtc-video-call.component';
 import { WebrtcVideoCallinfoDialogComponent } from './components/shared/webrtc-video-callinfo-dialog/webrtc-video-callinfo-dialog.component';
 import { VideoCallTravComponent } from './components/shared/video-call-trav/video-call-trav.component';
+import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { ViewTherapistsComponent } from './components/user/view-therapists/view-therapists.component';
 
 const config: SocketIoConfig = { url: environment.SOCKET_IO_URL , options: {} };
 
@@ -134,7 +136,9 @@ const config: SocketIoConfig = { url: environment.SOCKET_IO_URL , options: {} };
     VideoRoomComponent,
     WebrtcVideoCallComponent,
     WebrtcVideoCallinfoDialogComponent,
-    VideoCallTravComponent
+    VideoCallTravComponent,
+    UserProfileComponent,
+    ViewTherapistsComponent
   ],
   imports: [
     BrowserModule,
